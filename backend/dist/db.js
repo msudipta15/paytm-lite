@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usermodel = void 0;
+exports.accountmodel = exports.usermodel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const userSchema = new mongoose_1.Schema({
     username: { require: true, type: String, unique: true, max: 50 },
@@ -41,4 +41,9 @@ const userSchema = new mongoose_1.Schema({
     firstname: { require: true, type: String, max: 100 },
     lastname: { require: true, type: String, max: 100 },
 });
+const accountSchema = new mongoose_1.Schema({
+    userid: { type: mongoose_1.default.Types.ObjectId, require: true, ref: "user" },
+    balance: { type: Number, require: true },
+});
 exports.usermodel = mongoose_1.default.model("user", userSchema);
+exports.accountmodel = mongoose_1.default.model("account", accountSchema);
