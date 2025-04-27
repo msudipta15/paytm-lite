@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.accountmodel = exports.usermodel = void 0;
+exports.recievermodel = exports.accountmodel = exports.usermodel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const userSchema = new mongoose_1.Schema({
     username: { require: true, type: String, unique: true, max: 50 },
@@ -45,5 +45,10 @@ const accountSchema = new mongoose_1.Schema({
     userid: { type: mongoose_1.default.Types.ObjectId, require: true, ref: "user" },
     balance: { type: Number, require: true },
 });
+const recieverSchema = new mongoose_1.Schema({
+    userid: { type: mongoose_1.default.Types.ObjectId, require: true, ref: "user" },
+    recieverid: { type: mongoose_1.default.Types.ObjectId },
+});
 exports.usermodel = mongoose_1.default.model("user", userSchema);
 exports.accountmodel = mongoose_1.default.model("account", accountSchema);
+exports.recievermodel = mongoose_1.default.model("reciever", recieverSchema);

@@ -12,5 +12,11 @@ const accountSchema = new Schema({
   balance: { type: Number, require: true },
 });
 
+const recieverSchema = new Schema({
+  userid: { type: mongoose.Types.ObjectId, require: true, ref: "user" },
+  recieverid: { type: mongoose.Types.ObjectId },
+});
+
 export const usermodel = mongoose.model("user", userSchema);
 export const accountmodel = mongoose.model("account", accountSchema);
+export const recievermodel = mongoose.model("reciever", recieverSchema);

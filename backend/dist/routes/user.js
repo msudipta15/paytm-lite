@@ -139,3 +139,43 @@ userRoute.put("/update", auth_1.userauth, function (req, res) {
         }
     });
 });
+userRoute.post("/adduser", auth_1.userauth, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const id = req.id;
+        const username = req.body.username;
+        try {
+            const reciever = yield db_1.usermodel.findOne({ username: username });
+            const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
+            yield db_1.recievermodel.create({
+                userid: id,
+                recieverid: reciever_id,
+            });
+            res.json({ msg: "Reciever added" });
+        }
+        catch (error) {
+            res.json({ msg: "Something went wrong" });
+            console.log(error);
+        }
+    });
+});
+userRoute.put("/deleteuser", auth_1.userauth, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const id = req.id;
+        const username = req.body.username;
+        try {
+            const reciever = yield db_1.usermodel.findOne({ username: username });
+            const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
+            if (reciever) {
+                yield db_1.recievermodel.deleteOne({ userid: id, recieverid: reciever_id });
+                res.json({ msg: "Reciever deleted" });
+            }
+            else {
+                res.json({ msg: "Invalid username" });
+            }
+        }
+        catch (error) {
+            console.log(error);
+            res.json({ msg: "something went wrong" });
+        }
+    });
+});

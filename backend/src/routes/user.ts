@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Router } from "express";
-import { accountmodel, usermodel } from "../db";
+import { accountmodel, recievermodel, usermodel } from "../db";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -131,6 +131,50 @@ userRoute.put(
       }
     } else {
       res.json({ msg: "wrong input format" });
+    }
+  }
+);
+
+userRoute.post(
+  "/adduser",
+  userauth,
+  async function (req: Request, res: Response) {
+    const id = req.id;
+    const username = req.body.username;
+    try {
+      const reciever = await usermodel.findOne({ username: username });
+      const reciever_id = reciever?._id;
+
+      await recievermodel.create({
+        userid: id,
+        recieverid: reciever_id,
+      });
+      res.json({ msg: "Reciever added" });
+    } catch (error) {
+      res.json({ msg: "Something went wrong" });
+      console.log(error);
+    }
+  }
+);
+
+userRoute.put(
+  "/deleteuser",
+  userauth,
+  async function (req: Request, res: Response) {
+    const id = req.id;
+    const username = req.body.username;
+    try {
+      const reciever = await usermodel.findOne({ username: username });
+      const reciever_id = reciever?._id;
+      if (reciever) {
+        await recievermodel.deleteOne({ userid: id, recieverid: reciever_id });
+        res.json({ msg: "Reciever deleted" });
+      } else {
+        res.json({ msg: "Invalid username" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.json({ msg: "something went wrong" });
     }
   }
 );
