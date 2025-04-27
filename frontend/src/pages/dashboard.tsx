@@ -4,12 +4,14 @@ import { Usericon } from "../icons/usericon";
 import axios from "axios";
 import { Adduser } from "../components/adduser";
 import { Searchuser } from "../components/searchuser";
+import { useGetuser } from "../hooks/useGetuser";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
 
   const [username, setusername] = useState("");
   const [balance, setbalance] = useState(0);
+  const { recieverlist, recievers } = useGetuser();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,10 +38,13 @@ export function Dashboard() {
       const balance = account.data.balance;
       setbalance(balance);
     };
-
     fetchuserdata();
     fetchaccountdata();
   }, []);
+
+  useEffect(() => {
+    recieverlist();
+  }, [adduserModelOpen]);
 
   return (
     <div className="h-screen w-full bg-white relative">
@@ -81,9 +86,7 @@ export function Dashboard() {
             Add Reciever
           </button>
         </div>
-        <User />
-        <User />
-        <User />
+        <User firstname={"Sudipta"} lastname={"Mondal"} />
       </div>
     </div>
   );

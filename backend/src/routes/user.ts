@@ -136,15 +136,23 @@ userRoute.put(
 );
 
 userRoute.post(
-  "/adduser",
+  "/addreciever",
   userauth,
   async function (req: Request, res: Response) {
     const id = req.id;
     const username = req.body.username;
+
     try {
       const reciever = await usermodel.findOne({ username: username });
       const reciever_id = reciever?._id;
-
+      const existing = await recievermodel.findOne({
+        userid: id,
+        recieverid: reciever_id,
+      });
+      if (existing) {
+        res.json({ msg: "reciever already exists" });
+        return;
+      }
       await recievermodel.create({
         userid: id,
         recieverid: reciever_id,
@@ -158,7 +166,7 @@ userRoute.post(
 );
 
 userRoute.put(
-  "/deleteuser",
+  "/deletereciever",
   userauth,
   async function (req: Request, res: Response) {
     const id = req.id;
@@ -171,6 +179,26 @@ userRoute.put(
         res.json({ msg: "Reciever deleted" });
       } else {
         res.json({ msg: "Invalid username" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.json({ msg: "something went wrong" });
+    }
+  }
+);
+
+userRoute.get(
+  "/reciever",
+  userauth,
+  async function (req: Request, res: Response) {
+    const id = req.id;
+
+    try {
+      const reciever = await recievermodel.find({ userid: id });
+      if (reciever.length != 0) {
+        res.json({ reciever });
+      } else {
+        res.json({ msg: "No reciever found" });
       }
     } catch (error) {
       console.log(error);

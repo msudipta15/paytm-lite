@@ -139,13 +139,21 @@ userRoute.put("/update", auth_1.userauth, function (req, res) {
         }
     });
 });
-userRoute.post("/adduser", auth_1.userauth, function (req, res) {
+userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;
         const username = req.body.username;
         try {
             const reciever = yield db_1.usermodel.findOne({ username: username });
             const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
+            const existing = yield db_1.recievermodel.findOne({
+                userid: id,
+                recieverid: reciever_id,
+            });
+            if (existing) {
+                res.json({ msg: "reciever already exists" });
+                return;
+            }
             yield db_1.recievermodel.create({
                 userid: id,
                 recieverid: reciever_id,
@@ -158,7 +166,7 @@ userRoute.post("/adduser", auth_1.userauth, function (req, res) {
         }
     });
 });
-userRoute.put("/deleteuser", auth_1.userauth, function (req, res) {
+userRoute.put("/deletereciever", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;
         const username = req.body.username;
@@ -171,6 +179,24 @@ userRoute.put("/deleteuser", auth_1.userauth, function (req, res) {
             }
             else {
                 res.json({ msg: "Invalid username" });
+            }
+        }
+        catch (error) {
+            console.log(error);
+            res.json({ msg: "something went wrong" });
+        }
+    });
+});
+userRoute.get("/reciever", auth_1.userauth, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const id = req.id;
+        try {
+            const reciever = yield db_1.recievermodel.find({ userid: id });
+            if (reciever.length != 0) {
+                res.json({ reciever });
+            }
+            else {
+                res.json({ msg: "No reciever found" });
             }
         }
         catch (error) {

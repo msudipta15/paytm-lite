@@ -1,6 +1,22 @@
+import { useRef } from "react";
 import { CrossIcon } from "../icons/cross";
+import axios from "axios";
 
 export function Adduser({ open, close }: { open: boolean; close: () => void }) {
+  const recieverref = useRef<HTMLInputElement>(null);
+
+  async function addreciever() {
+    const username = recieverref.current?.value;
+    const token = localStorage.getItem("token");
+    await axios.post(
+      "http://localhost:3000/api/v1/addreciever",
+      { username },
+      { headers: { token: token } }
+    );
+    alert("Reciever Added");
+    close();
+  }
+
   return (
     open && (
       <div className="bg-slate-600/70  h-screen w-screen flex justify-center items-center fixed top-0 ">
@@ -24,6 +40,7 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
             {" "}
             <input
               placeholder="username..."
+              ref={recieverref}
               className="p-2 px-3 w-full mx-4 border border-gray-300 border-opacity-25 rounded-md"
               type="text"
             />
@@ -31,7 +48,7 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
           <div className="flex justify-center">
             {" "}
             <button
-              onClick={() => close()}
+              onClick={() => addreciever()}
               className="bg-blue-600 cursor-pointer rounded-md px-3.5 py-2.5 mt-1 text-white"
             >
               Add User
