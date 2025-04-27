@@ -94,6 +94,23 @@ userRoute.post("/signin", function (req, res) {
         }
     });
 });
+userRoute.get("/user", auth_1.userauth, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const id = req.id;
+        try {
+            const user = yield db_1.usermodel.findOne({ _id: id });
+            if (user) {
+                res.json({ user });
+            }
+            else {
+                res.json({ msg: "user not found" });
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+});
 userRoute.put("/update", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;

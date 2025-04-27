@@ -58,8 +58,9 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
             const session = yield mongoose_1.default.startSession();
             try {
                 session.startTransaction();
-                yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance });
-                yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance });
+                yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance }, { session });
+                yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance }, { session });
+                yield session.commitTransaction();
                 res.json({ msg: "Transaction Succesfull" });
             }
             catch (error) {

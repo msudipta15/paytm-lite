@@ -85,6 +85,20 @@ userRoute.post("/signin", async function (req: Request, res: Response) {
   }
 });
 
+userRoute.get("/user", userauth, async function (req: Request, res: Response) {
+  const id = req.id;
+  try {
+    const user = await usermodel.findOne({ _id: id });
+    if (user) {
+      res.json({ user });
+    } else {
+      res.json({ msg: "user not found" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 userRoute.put(
   "/update",
   userauth,
