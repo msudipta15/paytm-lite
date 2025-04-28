@@ -1,50 +1,20 @@
 import { useEffect, useState } from "react";
 import { User } from "../components/user";
 import { Usericon } from "../icons/usericon";
-import axios from "axios";
 import { Adduser } from "../components/adduser";
 import { Searchuser } from "../components/searchuser";
-import { useGetuser } from "../hooks/useGetuser";
+import { usegetUser } from "../hooks/useGetuser";
+import { useGetAccount } from "../hooks/useGetaccount";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
-
-  const [username, setusername] = useState("");
-  const [balance, setbalance] = useState(0);
-  const { recieverlist, recievers } = useGetuser();
+  const { username, getusername } = usegetUser();
+  const { balance, getbalance } = useGetAccount();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const fetchuserdata = async () => {
-      const user = await axios.get("http://localhost:3000/api/v1/user", {
-        headers: {
-          token: token,
-        },
-      });
-      console.log(user);
-      const firstname = user.data.user.firstname.toUpperCase();
-      setusername(firstname);
-    };
-
-    const fetchaccountdata = async () => {
-      const account = await axios.get(
-        "http://localhost:3000/api/v1/account/balance",
-        {
-          headers: {
-            token: token,
-          },
-        }
-      );
-      const balance = account.data.balance;
-      setbalance(balance);
-    };
-    fetchuserdata();
-    fetchaccountdata();
+    getusername();
+    getbalance();
   }, []);
-
-  useEffect(() => {
-    recieverlist();
-  }, [adduserModelOpen]);
 
   return (
     <div className="h-screen w-full bg-white relative">
