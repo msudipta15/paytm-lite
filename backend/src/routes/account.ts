@@ -30,7 +30,7 @@ accountRouter.post(
   async function (req: Request, res: Response) {
     const userid = req.id;
     const username = req.body.username;
-    const amount = req.body.amount;
+    const amount = parseInt(req.body.amount);
 
     const account = await accountmodel.findOne({ userid: userid });
     const user_balance = account?.balance;
@@ -44,16 +44,21 @@ accountRouter.post(
         res.json({ msg: "Insufficiant Balance" });
         return;
       }
-      const reciever_account = await accountmodel.findOne({ userid: reciever });
-      const reciever_balance = reciever_account?.balance;
-      const reciever_updated_balance = reciever_balance + amount;
-      const user_updated_balance = user_balance! - amount;
-      console.log(user_updated_balance);
 
       const session = await mongoose.startSession();
 
       try {
         session.startTransaction();
+        const reciever_account = await accountmodel.findOne({
+          userid: reciever,
+        });
+        const reciever_balance = reciever_account?.balance;
+        const reciever_updated_balance = reciever_balance! + amount;
+        const user_updated_balance = user_balance! - amount;
+        console.log(user_balance);
+        console.log(user_updated_balance);
+        console.log(reciever_balance);
+        console.log(reciever_updated_balance);
 
         await accountmodel.updateOne(
           { userid: userid },

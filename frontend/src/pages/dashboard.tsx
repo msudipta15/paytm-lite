@@ -6,12 +6,19 @@ import { Searchuser } from "../components/searchuser";
 import { usegetUser } from "../hooks/useGetuser";
 import { useGetAccount } from "../hooks/useGetaccount";
 import { useGetReciever } from "../hooks/useGetreciever";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
   const { username, getusername } = usegetUser();
   const { balance, getbalance } = useGetAccount();
   const { recieverlist, getrecievers } = useGetReciever();
+  const navigate = useNavigate();
+
+  function logout() {
+    navigate("/");
+    localStorage.removeItem("token");
+  }
 
   useEffect(() => {
     getusername();
@@ -25,20 +32,32 @@ export function Dashboard() {
 
   return (
     <div className="h-screen w-full bg-white relative">
-      <div className="bg-white border-b-2 border-opacity-25 border-b-gray-300 w-full h-24 flex justify-between items-center">
+      <div className="bg-white border-b-2 border-opacity-25 border-b-gray-300 w-full h-24 flex justify-between ">
         <Adduser
           open={adduserModelOpen}
           close={() => {
             setadduserModelOpen(false);
           }}
         />
-        <div className="p-6 text-5xl text-blue-500 font-extrabold items-center ">
-          Paytm
-        </div>
+        <div className="p-6 text-5xl text-blue-500 font-extrabold  ">Paytm</div>
         <div className="flex m-2 ">
-          <div className="mr-9 text-xl font-bold">Hello, {username} </div>
-          <div className="mr-4 cursor-pointer">
-            <Usericon />
+          <div className="mr-9 text-xl font-bold flex items-center">
+            <div>Hello, {username} </div>
+          </div>
+          <div className="mr-4 cursor-pointer flex gap-2   items-center">
+            <div className="mt-1">
+              <Usericon />
+            </div>
+            <div className="text-sm font-light mt-1">
+              <button
+                onClick={() => {
+                  logout();
+                }}
+                className="bg-slate-600 cursor-pointer py-1 px-2 rounded-md text-white"
+              >
+                Log out
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -63,12 +82,14 @@ export function Dashboard() {
             Add Reciever
           </button>
         </div>
-        {recieverlist.map((reciever) => (
-          <User
-            firstname={reciever.recieverfirstname}
-            lastname={reciever.recieverlastname}
-          />
-        ))}
+        {recieverlist &&
+          recieverlist.map((reciever) => (
+            <User
+              username={reciever.recieverusername}
+              firstname={reciever.recieverfirstname}
+              lastname={reciever.recieverlastname}
+            />
+          ))}
       </div>
     </div>
   );

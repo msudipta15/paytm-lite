@@ -39,7 +39,7 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userid = req.id;
         const username = req.body.username;
-        const amount = req.body.amount;
+        const amount = parseInt(req.body.amount);
         const account = yield db_1.accountmodel.findOne({ userid: userid });
         const user_balance = account === null || account === void 0 ? void 0 : account.balance;
         const reciever = yield db_1.usermodel
@@ -50,14 +50,19 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
                 res.json({ msg: "Insufficiant Balance" });
                 return;
             }
-            const reciever_account = yield db_1.accountmodel.findOne({ userid: reciever });
-            const reciever_balance = reciever_account === null || reciever_account === void 0 ? void 0 : reciever_account.balance;
-            const reciever_updated_balance = reciever_balance + amount;
-            const user_updated_balance = user_balance - amount;
-            console.log(user_updated_balance);
             const session = yield mongoose_1.default.startSession();
             try {
                 session.startTransaction();
+                const reciever_account = yield db_1.accountmodel.findOne({
+                    userid: reciever,
+                });
+                const reciever_balance = reciever_account === null || reciever_account === void 0 ? void 0 : reciever_account.balance;
+                const reciever_updated_balance = reciever_balance + amount;
+                const user_updated_balance = user_balance - amount;
+                console.log(user_balance);
+                console.log(user_updated_balance);
+                console.log(reciever_balance);
+                console.log(reciever_updated_balance);
                 yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance }, { session });
                 yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance }, { session });
                 yield session.commitTransaction();
