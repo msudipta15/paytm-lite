@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Personicon } from "../icons/personicon";
 import { useRef } from "react";
 import axios from "axios";
+import { Backicon } from "../icons/backicon";
 
 export function Sendmoney() {
   const { username } = useParams<{ username: string }>();
@@ -26,8 +27,10 @@ export function Sendmoney() {
 
   return (
     <div className="h-screen w-full bg-slate-950 flex justify-center items-center">
-      <div className="bg-white h-60 w-1/4 rounded-md p-4">
-        <div className="text-3xl  text-center font-bold">Send Money</div>
+      <div className="bg-white h-64 w-1/4 rounded-md p-4">
+        <div className="text-3xl  text-center font-bold flex justify-center items-center">
+          <div>Send Money</div>
+        </div>
         <div className="flex justify-center p-1 items-center  text-xl ">
           <div className="mt-1 ">
             <Personicon />
@@ -53,6 +56,17 @@ export function Sendmoney() {
           >
             Send
           </button>
+        </div>
+        <div className="flex justify-center items-center mt-1 ">
+          <div
+            className="mt-1 text-gray-500 cursor-pointer"
+            onClick={() => navigate("/dashboard")}
+          >
+            Back to Dashboard
+          </div>
+          <div className="ml-2" onClick={() => navigate("/dashboard")}>
+            <Backicon />
+          </div>
         </div>
       </div>
     </div>

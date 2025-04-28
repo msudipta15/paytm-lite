@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export function usegetUser() {
   const [username, setusername] = useState("");
+  const [lastname, setlastname] = useState("");
 
   async function getusername() {
     const token = localStorage.getItem("token");
@@ -12,9 +13,11 @@ export function usegetUser() {
       },
     });
     console.log(user);
-    const firstname = user.data.user.firstname.toUpperCase();
+    const firstname = user.data.user.firstname;
+    const lastname = user.data.user.lastname;
     setusername(firstname);
+    setlastname(lastname);
   }
 
-  return { username, getusername };
+  return { username, lastname, getusername };
 }

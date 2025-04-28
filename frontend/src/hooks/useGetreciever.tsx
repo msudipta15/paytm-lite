@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import {  useState } from "react";
 
 export function useGetReciever() {
   interface recieverlist {
@@ -21,6 +21,7 @@ export function useGetReciever() {
     const recievers = response.data.reciever;
     setrecieverlist(recievers);
   }
+
 
   return { recieverlist, getrecievers };
 }

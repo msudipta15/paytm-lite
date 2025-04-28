@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { User } from "../components/user";
-import { Usericon } from "../icons/usericon";
 import { Adduser } from "../components/adduser";
 import { Searchuser } from "../components/searchuser";
 import { usegetUser } from "../hooks/useGetuser";
 import { useGetAccount } from "../hooks/useGetaccount";
 import { useGetReciever } from "../hooks/useGetreciever";
 import { useNavigate } from "react-router-dom";
+import { EditIcon } from "../icons/editicon";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
@@ -41,19 +41,19 @@ export function Dashboard() {
         />
         <div className="p-6 text-5xl text-blue-500 font-extrabold  ">Paytm</div>
         <div className="flex m-2 ">
-          <div className="mr-9 text-xl font-bold flex items-center">
+          <div className="mr-7 mt-0.5 text-2xl font-bold flex items-center">
             <div>Hello, {username} </div>
+            <div className="ml-1.5" onClick={() => navigate("/edituser")}>
+              <EditIcon />
+            </div>
           </div>
           <div className="mr-4 cursor-pointer flex gap-2   items-center">
-            <div className="mt-1">
-              <Usericon />
-            </div>
             <div className="text-sm font-light mt-1">
               <button
                 onClick={() => {
                   logout();
                 }}
-                className="bg-slate-600 cursor-pointer py-1 px-2 rounded-md text-white"
+                className="bg-slate-600 cursor-pointer py-1.5 px-3 rounded-md text-white"
               >
                 Log out
               </button>
