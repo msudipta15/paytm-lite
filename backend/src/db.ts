@@ -15,6 +15,9 @@ const accountSchema = new Schema({
 const recieverSchema = new Schema({
   userid: { type: mongoose.Types.ObjectId, require: true, ref: "user" },
   recieverid: { type: mongoose.Types.ObjectId },
+  recieverusername: { type: String },
+  recieverfirstname: { type: String },
+  recieverlastname: { type: String },
 });
 
 export const usermodel = mongoose.model("user", userSchema);

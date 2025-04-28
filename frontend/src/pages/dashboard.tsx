@@ -5,16 +5,23 @@ import { Adduser } from "../components/adduser";
 import { Searchuser } from "../components/searchuser";
 import { usegetUser } from "../hooks/useGetuser";
 import { useGetAccount } from "../hooks/useGetaccount";
+import { useGetReciever } from "../hooks/useGetreciever";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
   const { username, getusername } = usegetUser();
   const { balance, getbalance } = useGetAccount();
+  const { recieverlist, getrecievers } = useGetReciever();
 
   useEffect(() => {
     getusername();
     getbalance();
+    getrecievers();
   }, []);
+
+  useEffect(() => {
+    getrecievers();
+  }, [adduserModelOpen]);
 
   return (
     <div className="h-screen w-full bg-white relative">
@@ -56,7 +63,12 @@ export function Dashboard() {
             Add Reciever
           </button>
         </div>
-        <User firstname={"Sudipta"} lastname={"Mondal"} />
+        {recieverlist.map((reciever) => (
+          <User
+            firstname={reciever.recieverfirstname}
+            lastname={reciever.recieverlastname}
+          />
+        ))}
       </div>
     </div>
   );

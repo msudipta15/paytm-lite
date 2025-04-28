@@ -145,6 +145,8 @@ userRoute.post(
     try {
       const reciever = await usermodel.findOne({ username: username });
       const reciever_id = reciever?._id;
+      const recieverfirstname = reciever?.firstname;
+      const recieverlastname = reciever?.lastname;
       const existing = await recievermodel.findOne({
         userid: id,
         recieverid: reciever_id,
@@ -156,6 +158,9 @@ userRoute.post(
       await recievermodel.create({
         userid: id,
         recieverid: reciever_id,
+        recieverusername: username,
+        recieverfirstname: recieverfirstname,
+        recieverlastname: recieverlastname,
       });
       res.json({ msg: "Reciever added" });
     } catch (error) {

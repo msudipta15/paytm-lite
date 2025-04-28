@@ -146,6 +146,8 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
         try {
             const reciever = yield db_1.usermodel.findOne({ username: username });
             const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
+            const recieverfirstname = reciever === null || reciever === void 0 ? void 0 : reciever.firstname;
+            const recieverlastname = reciever === null || reciever === void 0 ? void 0 : reciever.lastname;
             const existing = yield db_1.recievermodel.findOne({
                 userid: id,
                 recieverid: reciever_id,
@@ -157,6 +159,9 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
             yield db_1.recievermodel.create({
                 userid: id,
                 recieverid: reciever_id,
+                recieverusername: username,
+                recieverfirstname: recieverfirstname,
+                recieverlastname: recieverlastname,
             });
             res.json({ msg: "Reciever added" });
         }

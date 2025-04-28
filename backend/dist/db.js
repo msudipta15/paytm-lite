@@ -48,6 +48,9 @@ const accountSchema = new mongoose_1.Schema({
 const recieverSchema = new mongoose_1.Schema({
     userid: { type: mongoose_1.default.Types.ObjectId, require: true, ref: "user" },
     recieverid: { type: mongoose_1.default.Types.ObjectId },
+    recieverusername: { type: String },
+    recieverfirstname: { type: String },
+    recieverlastname: { type: String },
 });
 exports.usermodel = mongoose_1.default.model("user", userSchema);
 exports.accountmodel = mongoose_1.default.model("account", accountSchema);
