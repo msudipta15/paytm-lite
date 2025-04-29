@@ -18,7 +18,7 @@ export function Home() {
       <div className="bg-white flex justify-center  h-1/3">
         <div>
           <button
-            className="bg-slate-800 text-white rounded-md cursor-pointer py-4 px-10 m-4"
+            className="bg-slate-950 text-white rounded-md cursor-pointer py-4 px-10 m-4"
             onClick={() => {
               handlesignup();
             }}
@@ -28,7 +28,7 @@ export function Home() {
         </div>
         <div>
           <button
-            className="bg-slate-800 text-white rounded-md cursor-pointer  py-4 px-10 m-4"
+            className="bg-slate-950 text-white rounded-md cursor-pointer  py-4 px-10 m-4"
             onClick={() => {
               handlesignin();
             }}
