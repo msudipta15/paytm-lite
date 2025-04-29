@@ -38,9 +38,9 @@ export function EditUser() {
         <div className="bg-white px-8 py-4 pb-8 mt-32   flex flex-col rounded-md h-fit w-80">
           <div className=" flex justify-center items-center mb-1 font-bold  text-3xl">
             <div className="m-1">
-              <div className="flex justify-center items-center">Sign up</div>
+              <div className="flex justify-center items-center">Edit User</div>
               <div className="text-sm mt-1 font-light flex justify-center items-center text-center">
-                Enter your information to create an account
+                Update your details
               </div>
             </div>
           </div>
