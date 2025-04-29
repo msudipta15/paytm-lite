@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { User } from "../components/user";
 import { Adduser } from "../components/adduser";
-import { Searchuser } from "../components/searchuser";
 import { usegetUser } from "../hooks/useGetuser";
 import { useGetAccount } from "../hooks/useGetaccount";
 import { useGetReciever } from "../hooks/useGetreciever";
@@ -47,7 +46,7 @@ export function Dashboard() {
               <EditIcon />
             </div>
           </div>
-          <div className="mr-4 cursor-pointer flex gap-2   items-center">
+          <div className="mr-4 cursor-pointer flex    items-center">
             <div className="text-sm font-light mt-1">
               <button
                 onClick={() => {
@@ -61,16 +60,12 @@ export function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="bg-white h-20 flex items-center p-6 text-2xl font-bold">
+      <div className="bg-whit h-16  flex items-center p-6 text-2xl font-bold">
         Your Balance {balance}$
       </div>
-      <div className="bg-white h-9 flex items-center text-2xl font-bold p-6">
-        Users
-      </div>
-      <Searchuser />
-      <div className="w-full h-full  bg-white mt-2 p-4">
+      <div className="w-full h-full  bg-white  ">
         <div
-          className="w-full h-14 p-2 mb-2 
+          className="w-full h-14 p-2 mb-8 
              flex justify-center items-center"
         >
           <button
@@ -81,6 +76,9 @@ export function Dashboard() {
           >
             Add Reciever
           </button>
+        </div>
+        <div className=" h-9 flex items-center text-2xl border border-gray-300 rounded-md bg-blue-500  text-white font-bold p-6">
+          Reciever List
         </div>
         {recieverlist &&
           recieverlist.map((reciever) => (

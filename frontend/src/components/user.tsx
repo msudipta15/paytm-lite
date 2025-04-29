@@ -30,7 +30,7 @@ export function User({
     <div
       className={`${
         deleteuser
-          ? "bg-white h-14 p-3 m-1 mb-2 flex justify-between items-center border rounded-md border-gray-200 border-opacity-25"
+          ? "bg-white h-14 p-3 m-1 mb-2 flex justify-between items-center  rounded-md border-gray-200 border-opacity-25"
           : "hidden"
       }`}
     >

@@ -13,7 +13,6 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
       { username },
       { headers: { token: token } }
     );
-    alert("Reciever Added");
     close();
   }
 
