@@ -12,7 +12,6 @@ export function usegetUser() {
         token: token,
       },
     });
-    console.log(user);
     const firstname = user.data.user.firstname;
     const lastname = user.data.user.lastname;
     setusername(firstname);

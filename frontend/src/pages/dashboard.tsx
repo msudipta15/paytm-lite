@@ -81,8 +81,9 @@ export function Dashboard() {
           Reciever List
         </div>
         {recieverlist &&
-          recieverlist.map((reciever) => (
+          recieverlist.map((reciever, index) => (
             <User
+              key={index}
               username={reciever.recieverusername}
               firstname={reciever.recieverfirstname}
               lastname={reciever.recieverlastname}
