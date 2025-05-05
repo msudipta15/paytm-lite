@@ -37,50 +37,51 @@ accountRouter.post(
 
     const reciever = await usermodel.findOne({ email: email }).select("_id");
 
-    if (reciever) {
-      if (user_balance! < amount) {
-        res.json({ msg: "Insufficiant Balance" });
-        return;
-      }
+    if (user_balance! < amount) {
+      res.status(402).json({ msg: "Insufficiant Balance" });
+      return;
+    }
 
-      const session = await mongoose.startSession();
+    if (!reciever) {
+      res.status(402).json({ msg: "No User found" });
+      return;
+    }
 
-      try {
-        session.startTransaction();
-        const reciever_account = await accountmodel.findOne({
-          userid: reciever,
-        });
-        const reciever_balance = reciever_account?.balance;
-        const reciever_updated_balance = reciever_balance! + amount;
-        const user_updated_balance = user_balance! - amount;
-        console.log(user_balance);
-        console.log(user_updated_balance);
-        console.log(reciever_balance);
-        console.log(reciever_updated_balance);
+    const session = await mongoose.startSession();
 
-        await accountmodel.updateOne(
-          { userid: userid },
-          { balance: user_updated_balance },
-          { session }
-        );
+    try {
+      session.startTransaction();
+      const reciever_account = await accountmodel.findOne({
+        userid: reciever,
+      });
+      const reciever_balance = reciever_account?.balance;
+      const reciever_updated_balance = reciever_balance! + amount;
+      const user_updated_balance = user_balance! - amount;
+      console.log(user_balance);
+      console.log(user_updated_balance);
+      console.log(reciever_balance);
+      console.log(reciever_updated_balance);
 
-        await accountmodel.updateOne(
-          { userid: reciever },
-          { balance: reciever_updated_balance },
-          { session }
-        );
+      await accountmodel.updateOne(
+        { userid: userid },
+        { balance: user_updated_balance },
+        { session }
+      );
 
-        await session.commitTransaction();
+      await accountmodel.updateOne(
+        { userid: reciever },
+        { balance: reciever_updated_balance },
+        { session }
+      );
 
-        res.json({ msg: "Transaction Succesfull" });
-      } catch (error) {
-        console.log(error);
-        res.json({ msg: "Something went wrong" });
-      } finally {
-        session.endSession();
-      }
-    } else {
-      res.json({ msg: "user not found" });
+      await session.commitTransaction();
+
+      res.json({ msg: "Transaction Succesfull" });
+    } catch (error) {
+      console.log(error);
+      res.json({ msg: "Something went wrong" });
+    } finally {
+      session.endSession();
     }
   }
 );

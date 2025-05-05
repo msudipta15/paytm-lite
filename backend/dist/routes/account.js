@@ -43,39 +43,38 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
         const account = yield db_1.accountmodel.findOne({ userid: userid });
         const user_balance = account === null || account === void 0 ? void 0 : account.balance;
         const reciever = yield db_1.usermodel.findOne({ email: email }).select("_id");
-        if (reciever) {
-            if (user_balance < amount) {
-                res.json({ msg: "Insufficiant Balance" });
-                return;
-            }
-            const session = yield mongoose_1.default.startSession();
-            try {
-                session.startTransaction();
-                const reciever_account = yield db_1.accountmodel.findOne({
-                    userid: reciever,
-                });
-                const reciever_balance = reciever_account === null || reciever_account === void 0 ? void 0 : reciever_account.balance;
-                const reciever_updated_balance = reciever_balance + amount;
-                const user_updated_balance = user_balance - amount;
-                console.log(user_balance);
-                console.log(user_updated_balance);
-                console.log(reciever_balance);
-                console.log(reciever_updated_balance);
-                yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance }, { session });
-                yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance }, { session });
-                yield session.commitTransaction();
-                res.json({ msg: "Transaction Succesfull" });
-            }
-            catch (error) {
-                console.log(error);
-                res.json({ msg: "Something went wrong" });
-            }
-            finally {
-                session.endSession();
-            }
+        if (user_balance < amount) {
+            res.status(402).json({ msg: "Insufficiant Balance" });
+            return;
         }
-        else {
-            res.json({ msg: "user not found" });
+        if (!reciever) {
+            res.status(402).json({ msg: "No User found" });
+            return;
+        }
+        const session = yield mongoose_1.default.startSession();
+        try {
+            session.startTransaction();
+            const reciever_account = yield db_1.accountmodel.findOne({
+                userid: reciever,
+            });
+            const reciever_balance = reciever_account === null || reciever_account === void 0 ? void 0 : reciever_account.balance;
+            const reciever_updated_balance = reciever_balance + amount;
+            const user_updated_balance = user_balance - amount;
+            console.log(user_balance);
+            console.log(user_updated_balance);
+            console.log(reciever_balance);
+            console.log(reciever_updated_balance);
+            yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance }, { session });
+            yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance }, { session });
+            yield session.commitTransaction();
+            res.json({ msg: "Transaction Succesfull" });
+        }
+        catch (error) {
+            console.log(error);
+            res.json({ msg: "Something went wrong" });
+        }
+        finally {
+            session.endSession();
         }
     });
 });
