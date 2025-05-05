@@ -2,26 +2,27 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Personicon } from "../icons/personicon";
 import { useRef } from "react";
 import axios from "axios";
-import { Backicon } from "../icons/backicon";
 
 export function Sendmoney() {
-  const { username } = useParams<{ username: string }>();
+  const { email } = useParams<{ email: string }>();
   const amountref = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
   async function sendmoney() {
     const token = localStorage.getItem("token");
-    const reciever_username = username;
+    const reciever_email = email;
     const amount = amountref.current?.value;
+
+    console.log(reciever_email);
 
     await axios.post(
       "http://localhost:3000/api/v1/account/transfer",
-      { username: reciever_username, amount: amount },
+      { email: reciever_email, amount: amount },
       { headers: { token: token } }
     );
 
-    alert(`$${amount} send succesfully to ${reciever_username}`);
+    alert(`$${amount} send succesfully to ${reciever_email}`);
     navigate("/dashboard");
   }
 
@@ -35,7 +36,7 @@ export function Sendmoney() {
           <div className="mt-1 ">
             <Personicon />
           </div>
-          <div className="ml-0.5 text-2xl">{username}</div>
+          <div className="ml-0.5 text-xl">{email}</div>
         </div>
         <div>
           <div className="text-gray-600 mt-1">Amount (in Usd):</div>
@@ -62,10 +63,7 @@ export function Sendmoney() {
             className="mt-1 text-gray-500 cursor-pointer"
             onClick={() => navigate("/dashboard")}
           >
-            Back to Dashboard
-          </div>
-          <div className="ml-2" onClick={() => navigate("/dashboard")}>
-            <Backicon />
+            <span className="hover:text-slate-950">Back to Dashboard</span>
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ userRoute.post("/signin", async function (req: Request, res: Response) {
     email: email,
   });
   if (!user) {
-    res.status(400).json({ msg: "No account found with this email !" });
+    res.status(402).json({ msg: "No account found with this email !" });
   } else {
     const validpassword = await bcrypt.compare(password, user.password!);
     if (validpassword) {
@@ -144,6 +144,10 @@ userRoute.post(
 
     try {
       const reciever = await usermodel.findOne({ email: email });
+      if (!reciever) {
+        res.status(402).json({ msg: "No user found" });
+        return;
+      }
       const reciever_id = reciever?._id;
       const recieverfirstname = reciever?.firstname;
       const recieverlastname = reciever?.lastname;
@@ -203,7 +207,7 @@ userRoute.get(
       if (reciever.length != 0) {
         res.status(200).json({ reciever });
       } else {
-        res.status(402).json({ msg: "No reciever found" });
+        res.status(402).json({ msg: "No reciever Added" });
       }
     } catch (error) {
       console.log(error);

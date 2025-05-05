@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Signup() {
-  const usernameref = useRef<HTMLInputElement>(null);
+  const emailref = useRef<HTMLInputElement>(null);
   const passwordref = useRef<HTMLInputElement>(null);
   const firstnameref = useRef<HTMLInputElement>(null);
   const lastnameref = useRef<HTMLInputElement>(null);
@@ -13,19 +13,19 @@ export function Signup() {
   const navigate = useNavigate();
 
   async function signup() {
-    const username = usernameref.current?.value.trim();
+    const email = emailref.current?.value.trim();
     const password = passwordref.current?.value.trim();
     const firstname = firstnameref.current?.value.trim();
     const lastname = lastnameref.current?.value.trim();
 
-    if (!username || !password || !firstname || !lastname) {
+    if (!email || !password || !firstname || !lastname) {
       setError("All fields are required !");
       return;
     }
 
     try {
       await axios.post("http://localhost:3000/api/v1/signup", {
-        username,
+        email,
         password,
         firstname,
         lastname,
@@ -61,30 +61,30 @@ export function Signup() {
               signup();
             }}
           >
-            <div className="text-slate-900 font-medium ml-1">Username</div>
+            <div className="text-slate-900 font-medium ml-1">Email</div>
             <input
-              placeholder={"username..."}
-              ref={usernameref}
+              placeholder={"Enter your email"}
+              ref={emailref}
               className="p-1 m-1  border rounded-md border-slate-700 "
             />
             <div className="text-slate-900 font-medium ml-1">Password</div>
             <input
               type="text"
-              placeholder="password..."
+              placeholder={"Enter your password"}
               ref={passwordref}
               className="p-1 m-1  border rounded-md border-slate-700"
             />
             <div className="text-slate-900 font-medium ml-1">Firstname</div>
             <input
               type="text"
-              placeholder="firstname..."
+              placeholder="Enter your firstname"
               ref={firstnameref}
               className="p-1 m-1  border rounded-md border-slate-700"
             />
             <div className="text-slate-900 font-medium ml-1">Lastname</div>
             <input
               type="text"
-              placeholder="lastname..."
+              placeholder="Enter your lastname"
               ref={lastnameref}
               className="p-1 m-1  border rounded-md border-slate-700"
             />

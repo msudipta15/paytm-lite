@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 export function usegetUser() {
-  const [username, setusername] = useState("");
+  const [firstname, setfirstnamename] = useState("");
   const [lastname, setlastname] = useState("");
 
   async function getusername() {
@@ -14,9 +14,9 @@ export function usegetUser() {
     });
     const firstname = user.data.user.firstname;
     const lastname = user.data.user.lastname;
-    setusername(firstname);
+    setfirstnamename(firstname);
     setlastname(lastname);
   }
 
-  return { username, lastname, getusername };
+  return { firstname, lastname, getusername };
 }

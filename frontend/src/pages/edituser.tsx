@@ -7,7 +7,7 @@ export function EditUser() {
   const passwordref = useRef<HTMLInputElement>(null);
   const firstnameref = useRef<HTMLInputElement>(null);
   const lastnameref = useRef<HTMLInputElement>(null);
-  const { lastname, username, getusername } = usegetUser();
+  const { lastname, firstname, getusername } = usegetUser();
 
   getusername();
 
@@ -50,7 +50,7 @@ export function EditUser() {
             type="text"
             placeholder="firstname..."
             ref={firstnameref}
-            defaultValue={username}
+            defaultValue={firstname}
             className="p-1 m-1  border rounded-md border-slate-700"
           />
           <div className="text-slate-900 font-medium ml-1">lastname</div>

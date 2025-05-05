@@ -9,7 +9,7 @@ import { EditIcon } from "../icons/editicon";
 
 export function Dashboard() {
   const [adduserModelOpen, setadduserModelOpen] = useState(false);
-  const { username, getusername } = usegetUser();
+  const { firstname, getusername } = usegetUser();
   const { balance, getbalance } = useGetAccount();
   const { recieverlist, getrecievers } = useGetReciever();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export function Dashboard() {
         <div className="p-6 text-5xl text-blue-500 font-extrabold  ">Paytm</div>
         <div className="flex m-2 ">
           <div className="mr-7 mt-0.5 text-2xl font-bold flex items-center">
-            <div>Hello, {username} </div>
+            <div>Hello, {firstname} </div>
             <div className="ml-1.5" onClick={() => navigate("/edituser")}>
               <EditIcon />
             </div>
@@ -80,11 +80,12 @@ export function Dashboard() {
         <div className=" h-9 flex items-center text-2xl border border-gray-300 rounded-md bg-blue-500  text-white font-bold p-6">
           Reciever List
         </div>
+
         {recieverlist &&
           recieverlist.map((reciever, index) => (
             <User
               key={index}
-              username={reciever.recieverusername}
+              email={reciever.recieveremail}
               firstname={reciever.recieverfirstname}
               lastname={reciever.recieverlastname}
             />

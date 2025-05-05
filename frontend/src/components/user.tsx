@@ -5,11 +5,11 @@ import axios from "axios";
 import { useState } from "react";
 
 export function User({
-  username,
+  email,
   firstname,
   lastname,
 }: {
-  username: String;
+  email: String;
   firstname: String;
   lastname: String;
 }) {
@@ -20,7 +20,7 @@ export function User({
     const token = localStorage.getItem("token");
     await axios.put(
       "http://localhost:3000/api/v1/deletereciever",
-      { username },
+      { email },
       { headers: { token: token } }
     );
     setdeleteuser(false);
@@ -52,7 +52,7 @@ export function User({
         <div>
           <button
             onClick={() => {
-              navigate(`/sendmoney/${username}`);
+              navigate(`/sendmoney/${email}`);
             }}
             className="bg-green-600  text-white px-3 py-2 rounded-md cursor-pointer"
           >

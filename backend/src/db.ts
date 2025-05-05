@@ -1,21 +1,21 @@
 import mongoose, { Schema, Types } from "mongoose";
 
 const userSchema = new Schema({
-  email: { require: true, type: String, unique: true, max: 50 },
-  password: { require: true, type: String, max: 50 },
-  firstname: { require: true, type: String, max: 100 },
-  lastname: { require: true, type: String, max: 100 },
+  email: { required: true, type: String, unique: true, max: 50 },
+  password: { required: true, type: String, max: 50 },
+  firstname: { required: true, type: String, max: 100 },
+  lastname: { required: true, type: String, max: 100 },
 });
 
 const accountSchema = new Schema({
-  userid: { type: mongoose.Types.ObjectId, require: true, ref: "user" },
-  balance: { type: Number, require: true },
+  userid: { type: mongoose.Types.ObjectId, required: true, ref: "user" },
+  balance: { type: Number, required: true },
 });
 
 const recieverSchema = new Schema({
-  userid: { type: mongoose.Types.ObjectId, require: true, ref: "user" },
+  userid: { type: mongoose.Types.ObjectId, required: true, ref: "user" },
   recieverid: { type: mongoose.Types.ObjectId },
-  recieverusername: { type: String },
+  recieveremail: { type: String },
   recieverfirstname: { type: String },
   recieverlastname: { type: String },
 });

@@ -80,7 +80,7 @@ userRoute.post("/signin", function (req, res) {
             email: email,
         });
         if (!user) {
-            res.status(400).json({ msg: "No account found with this email !" });
+            res.status(402).json({ msg: "No account found with this email !" });
         }
         else {
             const validpassword = yield bcrypt_1.default.compare(password, user.password);
@@ -145,6 +145,10 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
         const email = req.body.email;
         try {
             const reciever = yield db_1.usermodel.findOne({ email: email });
+            if (!reciever) {
+                res.status(402).json({ msg: "No user found" });
+                return;
+            }
             const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
             const recieverfirstname = reciever === null || reciever === void 0 ? void 0 : reciever.firstname;
             const recieverlastname = reciever === null || reciever === void 0 ? void 0 : reciever.lastname;
@@ -201,7 +205,7 @@ userRoute.get("/reciever", auth_1.userauth, function (req, res) {
                 res.status(200).json({ reciever });
             }
             else {
-                res.status(402).json({ msg: "No reciever found" });
+                res.status(402).json({ msg: "No reciever Added" });
             }
         }
         catch (error) {
