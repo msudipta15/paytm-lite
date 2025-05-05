@@ -16,6 +16,11 @@ export function Sendmoney() {
     const reciever_email = email;
     const amount = amountref.current?.value;
 
+    if (!amount) {
+      seterror("Enter a amount !");
+      return;
+    }
+
     try {
       await axios.post(
         "http://localhost:3000/api/v1/account/transfer",
