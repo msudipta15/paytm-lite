@@ -27,10 +27,10 @@ accountRouter.get("/balance", auth_1.userauth, function (req, res) {
                 userid: userid,
             });
             const balance = account === null || account === void 0 ? void 0 : account.balance;
-            res.json({ balance: balance });
+            res.status(200).json({ balance: balance });
         }
         catch (error) {
-            res.json({ msg: "Something went wrong !" });
+            res.status(402).json({ msg: "Something went wrong !" });
             console.log(error);
         }
     });
@@ -38,13 +38,11 @@ accountRouter.get("/balance", auth_1.userauth, function (req, res) {
 accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userid = req.id;
-        const username = req.body.username;
+        const email = req.body.email;
         const amount = parseInt(req.body.amount);
         const account = yield db_1.accountmodel.findOne({ userid: userid });
         const user_balance = account === null || account === void 0 ? void 0 : account.balance;
-        const reciever = yield db_1.usermodel
-            .findOne({ username: username })
-            .select("_id");
+        const reciever = yield db_1.usermodel.findOne({ email: email }).select("_id");
         if (reciever) {
             if (user_balance < amount) {
                 res.json({ msg: "Insufficiant Balance" });

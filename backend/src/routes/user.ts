@@ -12,19 +12,19 @@ const userRoute = Router();
 
 userRoute.post("/signup", async function (req: Request, res: Response) {
   const signupschema = z.object({
-    username: z.string().min(2).max(50),
+    email: z.string().max(100).email(),
     password: z.string().min(2).max(50),
     firstname: z.string().max(100).min(1),
     lastname: z.string().max(100).min(1),
   });
 
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
 
   const validsignup = signupschema.safeParse({
-    username,
+    email,
     password,
     firstname,
     lastname,
@@ -33,16 +33,16 @@ userRoute.post("/signup", async function (req: Request, res: Response) {
   const hashpassword = await bcrypt.hash(password, 10);
 
   if (validsignup.success) {
-    const existinguser = await usermodel.findOne({ username: username });
+    const existinguser = await usermodel.findOne({ email: email });
 
     if (existinguser) {
-      res.json({ msg: "username already exists" });
+      res.status(409).json({ msg: "Email already exists , Please Sign in" });
       return;
     }
 
     try {
       const user = await usermodel.create({
-        username,
+        email: email,
         password: hashpassword,
         firstname,
         lastname,
@@ -58,29 +58,29 @@ userRoute.post("/signup", async function (req: Request, res: Response) {
       res.json({ msg: "Signed Up" });
     } catch (error) {
       console.log(error);
-      res.json({ msg: "Error signing up" });
+      res.status(400).json({ msg: "Error signing up" });
     }
   } else {
-    res.json({ msg: "Wrong Input Credentials" });
+    res.status(422).json({ msg: "Wrong Input Credentials" });
   }
 });
 
 userRoute.post("/signin", async function (req: Request, res: Response) {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
   const user = await usermodel.findOne({
-    username,
+    email: email,
   });
   if (!user) {
-    res.json({ msg: "Invalid username" });
+    res.status(400).json({ msg: "No account found with this email !" });
   } else {
     const validpassword = await bcrypt.compare(password, user.password!);
     if (validpassword) {
       const token = jwt.sign({ id: user._id.toString() }, process.env.jwt_key!);
-      res.json({ token: token });
+      res.status(200).json({ token: token });
     } else {
-      res.json({ msg: "Incorrect password" });
+      res.status(402).json({ msg: "Incorrect password" });
     }
   }
 });
@@ -124,13 +124,13 @@ userRoute.put(
           { _id: id },
           { firstname, lastname, password: hashpassword }
         );
-        res.json({ msg: "updated" });
+        res.status(200).json({ msg: "updated" });
       } catch (error) {
-        res.json({ msg: "Update failed " });
+        res.status(402).json({ msg: "Update failed" });
         console.log(error);
       }
     } else {
-      res.json({ msg: "wrong input format" });
+      res.status(411).json({ msg: "Wrong input format !" });
     }
   }
 );
@@ -140,10 +140,10 @@ userRoute.post(
   userauth,
   async function (req: Request, res: Response) {
     const id = req.id;
-    const username = req.body.username;
+    const email = req.body.email;
 
     try {
-      const reciever = await usermodel.findOne({ username: username });
+      const reciever = await usermodel.findOne({ email: email });
       const reciever_id = reciever?._id;
       const recieverfirstname = reciever?.firstname;
       const recieverlastname = reciever?.lastname;
@@ -152,19 +152,19 @@ userRoute.post(
         recieverid: reciever_id,
       });
       if (existing) {
-        res.json({ msg: "reciever already exists" });
+        res.status(411).json({ msg: "Reciever already added" });
         return;
       }
       await recievermodel.create({
         userid: id,
         recieverid: reciever_id,
-        recieverusername: username,
+        recieveremail: email,
         recieverfirstname: recieverfirstname,
         recieverlastname: recieverlastname,
       });
-      res.json({ msg: "Reciever added" });
+      res.status(200).json({ msg: "Reciever added" });
     } catch (error) {
-      res.json({ msg: "Something went wrong" });
+      res.status(401).json({ msg: "Something went wrong" });
       console.log(error);
     }
   }
@@ -175,19 +175,19 @@ userRoute.put(
   userauth,
   async function (req: Request, res: Response) {
     const id = req.id;
-    const username = req.body.username;
+    const email = req.body.email;
     try {
-      const reciever = await usermodel.findOne({ username: username });
+      const reciever = await usermodel.findOne({ email: email });
       const reciever_id = reciever?._id;
       if (reciever) {
         await recievermodel.deleteOne({ userid: id, recieverid: reciever_id });
-        res.json({ msg: "Reciever deleted" });
+        res.status(200).json({ msg: "Reciever Deleted" });
       } else {
-        res.json({ msg: "Invalid username" });
+        res.status(401).json({ msg: "Invalid username" });
       }
     } catch (error) {
       console.log(error);
-      res.json({ msg: "something went wrong" });
+      res.status(402).json({ msg: "something went wrong !" });
     }
   }
 );
@@ -201,13 +201,13 @@ userRoute.get(
     try {
       const reciever = await recievermodel.find({ userid: id });
       if (reciever.length != 0) {
-        res.json({ reciever });
+        res.status(200).json({ reciever });
       } else {
-        res.json({ msg: "No reciever found" });
+        res.status(402).json({ msg: "No reciever found" });
       }
     } catch (error) {
       console.log(error);
-      res.json({ msg: "something went wrong" });
+      res.status(402).json({ msg: "something went wrong" });
     }
   }
 );

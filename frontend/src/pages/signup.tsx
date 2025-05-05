@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Signup() {
@@ -7,6 +7,8 @@ export function Signup() {
   const passwordref = useRef<HTMLInputElement>(null);
   const firstnameref = useRef<HTMLInputElement>(null);
   const lastnameref = useRef<HTMLInputElement>(null);
+
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -16,14 +18,27 @@ export function Signup() {
     const firstname = firstnameref.current?.value.trim();
     const lastname = lastnameref.current?.value.trim();
 
-    await axios.post("http://localhost:3000/api/v1/signup", {
-      username,
-      password,
-      firstname,
-      lastname,
-    });
+    if (!username || !password || !firstname || !lastname) {
+      setError("All fields are required !");
+      return;
+    }
 
-    navigate("/signin");
+    try {
+      await axios.post("http://localhost:3000/api/v1/signup", {
+        username,
+        password,
+        firstname,
+        lastname,
+      });
+
+      navigate("/signin");
+    } catch (err: any) {
+      if (err.response?.data?.msg) {
+        setError(err.response?.data?.msg);
+      } else {
+        setError("Something went wrong !");
+      }
+    }
   }
 
   return (
@@ -38,41 +53,54 @@ export function Signup() {
               </div>
             </div>
           </div>
-          <div className="text-slate-900 font-medium ml-1">username</div>
-          <input
-            placeholder={"username..."}
-            ref={usernameref}
-            className="p-1 m-1  border rounded-md border-slate-700 "
-          />
-          <div className="text-slate-900 font-medium ml-1">password</div>
-          <input
-            type="text"
-            placeholder="password..."
-            ref={passwordref}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <div className="text-slate-900 font-medium ml-1">firstname</div>
-          <input
-            type="text"
-            placeholder="firstname..."
-            ref={firstnameref}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <div className="text-slate-900 font-medium ml-1">lastname</div>
-          <input
-            type="text"
-            placeholder="lastname..."
-            ref={lastnameref}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <button
-            onClick={() => {
+
+          <form
+            className="flex flex-col"
+            onSubmit={(e) => {
+              e.preventDefault();
               signup();
             }}
-            className="p-2 bg-slate-950 rounded-md text-white text-lg font-medium mt-3.5 cursor-pointer hover:bg-slate-800 "
           >
-            Submit
-          </button>
+            <div className="text-slate-900 font-medium ml-1">Username</div>
+            <input
+              placeholder={"username..."}
+              ref={usernameref}
+              className="p-1 m-1  border rounded-md border-slate-700 "
+            />
+            <div className="text-slate-900 font-medium ml-1">Password</div>
+            <input
+              type="text"
+              placeholder="password..."
+              ref={passwordref}
+              className="p-1 m-1  border rounded-md border-slate-700"
+            />
+            <div className="text-slate-900 font-medium ml-1">Firstname</div>
+            <input
+              type="text"
+              placeholder="firstname..."
+              ref={firstnameref}
+              className="p-1 m-1  border rounded-md border-slate-700"
+            />
+            <div className="text-slate-900 font-medium ml-1">Lastname</div>
+            <input
+              type="text"
+              placeholder="lastname..."
+              ref={lastnameref}
+              className="p-1 m-1  border rounded-md border-slate-700"
+            />
+            <button
+              type="submit"
+              className="p-2 bg-slate-950 rounded-md text-white text-lg font-medium mt-3.5 cursor-pointer hover:bg-slate-800 "
+            >
+              Submit
+            </button>
+          </form>
+          {error && (
+            <div className="text-red-500 flex justify-center text-sm mt-2">
+              {error}
+            </div>
+          )}
+
           <div className="text-center mt-2">
             Already have an account?{" "}
             <a className="text-blue-500" href="http://localhost:5173/signin">

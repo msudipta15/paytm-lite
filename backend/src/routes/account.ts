@@ -16,9 +16,9 @@ accountRouter.get(
         userid: userid,
       });
       const balance = account?.balance;
-      res.json({ balance: balance });
+      res.status(200).json({ balance: balance });
     } catch (error) {
-      res.json({ msg: "Something went wrong !" });
+      res.status(402).json({ msg: "Something went wrong !" });
       console.log(error);
     }
   }
@@ -29,15 +29,13 @@ accountRouter.post(
   userauth,
   async function (req: Request, res: Response) {
     const userid = req.id;
-    const username = req.body.username;
+    const email = req.body.email;
     const amount = parseInt(req.body.amount);
 
     const account = await accountmodel.findOne({ userid: userid });
     const user_balance = account?.balance;
 
-    const reciever = await usermodel
-      .findOne({ username: username })
-      .select("_id");
+    const reciever = await usermodel.findOne({ email: email }).select("_id");
 
     if (reciever) {
       if (user_balance! < amount) {

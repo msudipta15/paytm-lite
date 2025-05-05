@@ -26,31 +26,31 @@ exports.userRoute = userRoute;
 userRoute.post("/signup", function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const signupschema = zod_1.z.object({
-            username: zod_1.z.string().min(2).max(50),
+            email: zod_1.z.string().max(100).email(),
             password: zod_1.z.string().min(2).max(50),
             firstname: zod_1.z.string().max(100).min(1),
             lastname: zod_1.z.string().max(100).min(1),
         });
-        const username = req.body.username;
+        const email = req.body.email;
         const password = req.body.password;
         const firstname = req.body.firstname;
         const lastname = req.body.lastname;
         const validsignup = signupschema.safeParse({
-            username,
+            email,
             password,
             firstname,
             lastname,
         });
         const hashpassword = yield bcrypt_1.default.hash(password, 10);
         if (validsignup.success) {
-            const existinguser = yield db_1.usermodel.findOne({ username: username });
+            const existinguser = yield db_1.usermodel.findOne({ email: email });
             if (existinguser) {
-                res.json({ msg: "username already exists" });
+                res.status(409).json({ msg: "Email already exists , Please Sign in" });
                 return;
             }
             try {
                 const user = yield db_1.usermodel.create({
-                    username,
+                    email: email,
                     password: hashpassword,
                     firstname,
                     lastname,
@@ -64,32 +64,32 @@ userRoute.post("/signup", function (req, res) {
             }
             catch (error) {
                 console.log(error);
-                res.json({ msg: "Error signing up" });
+                res.status(400).json({ msg: "Error signing up" });
             }
         }
         else {
-            res.json({ msg: "Wrong Input Credentials" });
+            res.status(422).json({ msg: "Wrong Input Credentials" });
         }
     });
 });
 userRoute.post("/signin", function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const username = req.body.username;
+        const email = req.body.email;
         const password = req.body.password;
         const user = yield db_1.usermodel.findOne({
-            username,
+            email: email,
         });
         if (!user) {
-            res.json({ msg: "Invalid username" });
+            res.status(400).json({ msg: "No account found with this email !" });
         }
         else {
             const validpassword = yield bcrypt_1.default.compare(password, user.password);
             if (validpassword) {
                 const token = jsonwebtoken_1.default.sign({ id: user._id.toString() }, process.env.jwt_key);
-                res.json({ token: token });
+                res.status(200).json({ token: token });
             }
             else {
-                res.json({ msg: "Incorrect password" });
+                res.status(402).json({ msg: "Incorrect password" });
             }
         }
     });
@@ -127,24 +127,24 @@ userRoute.put("/update", auth_1.userauth, function (req, res) {
         if (validupdate.success) {
             try {
                 yield db_1.usermodel.updateOne({ _id: id }, { firstname, lastname, password: hashpassword });
-                res.json({ msg: "updated" });
+                res.status(200).json({ msg: "updated" });
             }
             catch (error) {
-                res.json({ msg: "Update failed " });
+                res.status(402).json({ msg: "Update failed" });
                 console.log(error);
             }
         }
         else {
-            res.json({ msg: "wrong input format" });
+            res.status(411).json({ msg: "Wrong input format !" });
         }
     });
 });
 userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;
-        const username = req.body.username;
+        const email = req.body.email;
         try {
-            const reciever = yield db_1.usermodel.findOne({ username: username });
+            const reciever = yield db_1.usermodel.findOne({ email: email });
             const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
             const recieverfirstname = reciever === null || reciever === void 0 ? void 0 : reciever.firstname;
             const recieverlastname = reciever === null || reciever === void 0 ? void 0 : reciever.lastname;
@@ -153,20 +153,20 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
                 recieverid: reciever_id,
             });
             if (existing) {
-                res.json({ msg: "reciever already exists" });
+                res.status(411).json({ msg: "Reciever already added" });
                 return;
             }
             yield db_1.recievermodel.create({
                 userid: id,
                 recieverid: reciever_id,
-                recieverusername: username,
+                recieveremail: email,
                 recieverfirstname: recieverfirstname,
                 recieverlastname: recieverlastname,
             });
-            res.json({ msg: "Reciever added" });
+            res.status(200).json({ msg: "Reciever added" });
         }
         catch (error) {
-            res.json({ msg: "Something went wrong" });
+            res.status(401).json({ msg: "Something went wrong" });
             console.log(error);
         }
     });
@@ -174,21 +174,21 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
 userRoute.put("/deletereciever", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;
-        const username = req.body.username;
+        const email = req.body.email;
         try {
-            const reciever = yield db_1.usermodel.findOne({ username: username });
+            const reciever = yield db_1.usermodel.findOne({ email: email });
             const reciever_id = reciever === null || reciever === void 0 ? void 0 : reciever._id;
             if (reciever) {
                 yield db_1.recievermodel.deleteOne({ userid: id, recieverid: reciever_id });
-                res.json({ msg: "Reciever deleted" });
+                res.status(200).json({ msg: "Reciever Deleted" });
             }
             else {
-                res.json({ msg: "Invalid username" });
+                res.status(401).json({ msg: "Invalid username" });
             }
         }
         catch (error) {
             console.log(error);
-            res.json({ msg: "something went wrong" });
+            res.status(402).json({ msg: "something went wrong !" });
         }
     });
 });
@@ -198,15 +198,15 @@ userRoute.get("/reciever", auth_1.userauth, function (req, res) {
         try {
             const reciever = yield db_1.recievermodel.find({ userid: id });
             if (reciever.length != 0) {
-                res.json({ reciever });
+                res.status(200).json({ reciever });
             }
             else {
-                res.json({ msg: "No reciever found" });
+                res.status(402).json({ msg: "No reciever found" });
             }
         }
         catch (error) {
             console.log(error);
-            res.json({ msg: "something went wrong" });
+            res.status(402).json({ msg: "something went wrong" });
         }
     });
 });
