@@ -54,7 +54,7 @@ export function User({
             onClick={() => {
               navigate(`/sendmoney/${email}`);
             }}
-            className="bg-green-600  text-white px-3 py-2 rounded-md cursor-pointer"
+            className="bg-green-600  text-white px-6 py-2 rounded-md cursor-pointer"
           >
             Send
           </button>

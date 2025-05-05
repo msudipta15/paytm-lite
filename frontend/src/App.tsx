@@ -6,6 +6,7 @@ import { Signin } from "./pages/signin";
 import { Dashboard } from "./pages/dashboard";
 import { Sendmoney } from "./pages/sendmoney";
 import { EditUser } from "./pages/edituser";
+import { Dashboard_new } from "./pages/dashboard_new";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard2" element={<Dashboard_new />} />
         <Route path="/sendmoney/:email" element={<Sendmoney />} />
         <Route path="/edituser" element={<EditUser />} />
       </Routes>
