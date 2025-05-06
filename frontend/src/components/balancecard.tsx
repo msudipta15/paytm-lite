@@ -1,6 +1,6 @@
 export function BalanceCard() {
   return (
-    <div className="bg-white p-5   mt-10 mr-20 ml-20 rounded-md">
+    <div className="bg-white p-5   mt-10 mr-20 ml-20 rounded-md ">
       <div className="text-2xl text-gray-800 font-medium mb-1">
         Your Balance
       </div>

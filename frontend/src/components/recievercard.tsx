@@ -10,12 +10,14 @@ export function RecieverCard() {
         </div>
         <div className="text-xl font-medium ">Sudipta Mondal</div>
       </div>
-      <div className="flex items-center">
-        <div>
+      <div className="flex items-center gap-4">
+        <div className="mt-1">
           <DeleteIcon />
         </div>
         <div>
-          <button>Send</button>
+          <button className="bg-green-500 px-5 py-1 text-white rounded-lg font-medium text-lg">
+            Send
+          </button>
         </div>
       </div>
     </div>
