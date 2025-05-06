@@ -1,6 +1,6 @@
 export function Brandcard() {
   return (
-    <div className="bg-blue-600 h-80 w-full">
+    <div className="bg-blue-600 h-96 w-full">
       <div className="text-white text-center">
         <h1 className="text-6xl pt-10 font-extrabold">Welcome to Paytm</h1>
         <h3 className="mt-3  text-2xl">
@@ -8,7 +8,7 @@ export function Brandcard() {
         </h3>
         <h3 className="  text-2xl">payments at your fingertips.</h3>
       </div>
-      <div className="pt-12 flex justify-center gap-5">
+      <div className="pt-22 flex justify-center gap-5">
         <button className="px-7 py-3 text-lg font-medium rounded-lg text-blue-500 cursor-pointer hover:text-blue-700 bg-white">
           Get Started
         </button>

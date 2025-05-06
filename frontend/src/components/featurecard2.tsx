@@ -2,7 +2,7 @@ import { SecureIcon } from "../icons/secureicon";
 
 export function FeatureCard2() {
   return (
-    <div className="bg-white max-w-64 p-3 flex flex-col justify-center h-64 text-center rounded-lg">
+    <div className="bg-white max-w-64 p-3 pt-5 flex flex-col justify-center h-64 text-center rounded-lg">
       <div className="text-blue-600 flex justify-center">
         <SecureIcon />
       </div>

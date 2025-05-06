@@ -51,6 +51,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const user_1 = require("./routes/user");
 const account_1 = require("./routes/account");
+const guest_1 = require("./routes/guest");
 const app = (0, express_1.default)();
 /* // To allow a specific origin in corse do the below
 
@@ -77,4 +78,5 @@ app.use((0, express_1.Router)());
 app.use(express_1.default.json());
 app.use("/api/v1", user_1.userRoute);
 app.use("/api/v1/account", account_1.accountRouter);
+app.use("/api/v1/guest", guest_1.guestRoute);
 app.listen(3000);

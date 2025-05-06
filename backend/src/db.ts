@@ -20,6 +20,11 @@ const recieverSchema = new Schema({
   recieverlastname: { type: String },
 });
 
+const guestSchema = new Schema({
+  email: { type: String, required: true, unique: true, max: 100 },
+});
+
 export const usermodel = mongoose.model("user", userSchema);
 export const accountmodel = mongoose.model("account", accountSchema);
 export const recievermodel = mongoose.model("reciever", recieverSchema);
+export const guestModel = mongoose.model("guest", guestSchema);

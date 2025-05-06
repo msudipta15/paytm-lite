@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { userRoute } from "./routes/user";
 import { accountRouter } from "./routes/account";
+import { guestRoute } from "./routes/guest";
 
 const app = express();
 
@@ -35,5 +36,6 @@ app.use(express.json());
 
 app.use("/api/v1", userRoute);
 app.use("/api/v1/account", accountRouter);
+app.use("/api/v1/guest", guestRoute);
 
 app.listen(3000);
