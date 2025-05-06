@@ -12,11 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.guestRoute = void 0;
 const express_1 = require("express");
 const db_1 = require("../db");
+const zod_1 = require("zod");
 const guestRoute = (0, express_1.Router)();
 exports.guestRoute = guestRoute;
 guestRoute.post("/subscribe", function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        const emailbody = zod_1.z.object({
+            email: zod_1.z.string().email().max(100),
+        });
         const email = req.body.email;
+        const safeParse = emailbody.safeParse({ email });
+        if (safeParse.error) {
+            res.status(406).json({ msg: "Please enter a valid email" });
+            return;
+        }
         try {
             const user = yield db_1.guestModel.findOne({
                 email: email,

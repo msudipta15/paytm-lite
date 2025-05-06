@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Brandcard } from "../components/brandcard";
 import { FeatureCard1 } from "../components/featurecard1";
 import { FeatureCard2 } from "../components/featurecard2";
@@ -13,10 +14,20 @@ import { Mfeature2 } from "../icons/mfeautre2";
 import { Mfeature4 } from "../icons/mfeauture4";
 
 export function Home2() {
+  const navigate = useNavigate();
+
+  function handlesignup() {
+    navigate("/signup2");
+  }
+
+  function handlesignin() {
+    navigate("/signin2");
+  }
+
   return (
     <div className="w-full min-h-screen max-h-full bg-gray-100">
-      <HomeTopBar />
-      <Brandcard />
+      <HomeTopBar handlesignin={handlesignin} handlesignup={handlesignup} />
+      <Brandcard handlesignin={handlesignin} handlesignup={handlesignup} />
       <div className="bg-gray-50 pb-12">
         <div className="text-center p-3 pt-12  mb-2 text-slate-900 text-3xl font-bold">
           Why Choose Paytm ?

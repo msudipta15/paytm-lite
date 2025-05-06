@@ -1,13 +1,15 @@
-export function Signup2() {
+
+
+export function Signin2() {
   return (
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
         <div className=" font-bold text-4xl pl-20 text-blue-600">Paytm</div>
       </div>
       <div className="flex justify-center">
-        <div className="bg-white w-lg max-h-full mt-15 p-4 rounded-lg">
-          <div className="text-center text-2xl mb-5 font-medium text-slate-900">
-            Create Your Paytm Account
+        <div className="bg-white w-lg max-h-full mt-25 p-4 rounded-lg">
+          <div className="text-center text-2xl mb-5 font-medium text-slate-900 ">
+            Sign In to Paytm
           </div>
           <div>
             <div className="ml-15 mr-15 mb-3">
@@ -18,26 +20,7 @@ export function Signup2() {
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
             </div>
-            <div className="ml-15 mr-15 mb-3">
-              <div className="text-slate-700 font-medium pl-1 mb-1">
-                First Name
-              </div>
-              <input
-                type="text"
-                placeholder="Enter your first name"
-                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
-              />
-            </div>
-            <div className="ml-15 mr-15 mb-3">
-              <div className="text-slate-700 font-medium pl-1 mb-1">
-                Last Name
-              </div>
-              <input
-                type="text"
-                placeholder="Enter your last name"
-                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
-              />
-            </div>
+
             <div className="ml-15 mr-15 mb-3">
               <div className="text-slate-700 font-medium pl-1 mb-1">
                 Password
