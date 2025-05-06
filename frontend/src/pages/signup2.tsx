@@ -1,4 +1,45 @@
+import axios from "axios";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export function Signup2() {
+  const emailref = useRef<HTMLInputElement>(null);
+  const firstnameref = useRef<HTMLInputElement>(null);
+  const lastnameref = useRef<HTMLInputElement>(null);
+  const passwordref = useRef<HTMLInputElement>(null);
+
+  const [error, seterror] = useState("");
+
+  const navigate = useNavigate();
+
+  async function signup() {
+    const email = emailref.current?.value;
+    const firstname = firstnameref.current?.value;
+    const lastname = lastnameref.current?.value;
+    const password = passwordref.current?.value;
+
+    if (!email || !firstname || !lastname || !password) {
+      seterror("All fields are required !");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:3000/api/v1/signup", {
+        email,
+        firstname,
+        lastname,
+        password,
+      });
+      navigate("/signin2");
+    } catch (error: any) {
+      if (error.response?.data?.msg) {
+        seterror(error.response?.data?.msg);
+      } else {
+        seterror("something went wrong");
+      }
+    }
+  }
+
   return (
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
@@ -16,6 +57,7 @@ export function Signup2() {
               <div className="text-slate-700 font-medium pl-1 mb-1">Email</div>
               <input
                 type="text"
+                ref={emailref}
                 placeholder="Enter your email"
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
@@ -26,6 +68,7 @@ export function Signup2() {
               </div>
               <input
                 type="text"
+                ref={firstnameref}
                 placeholder="Enter your first name"
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
@@ -36,6 +79,7 @@ export function Signup2() {
               </div>
               <input
                 type="text"
+                ref={lastnameref}
                 placeholder="Enter your last name"
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
@@ -46,15 +90,24 @@ export function Signup2() {
               </div>
               <input
                 type="password"
+                ref={passwordref}
                 placeholder="Enter your password"
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
             </div>
             <div className="ml-15 mr-15 mt-4 mb-3 ">
-              <button className="bg-blue-600 w-full px-5 py-3 rounded-lg cursor-pointer hover:bg-blue-900  text-white font-medium text-lg">
+              <button
+                onClick={() => signup()}
+                className="bg-blue-600 w-full px-5 py-3 rounded-lg cursor-pointer hover:bg-blue-900  text-white font-medium text-lg"
+              >
                 Sign Up
               </button>
             </div>
+            {error && (
+              <div className="text-center text-lg text-red-500 font-medium">
+                {error}
+              </div>
+            )}
             <div className="ml-15 mr-15  mb-3 text-center ">
               <span>Already have an account? </span>
               <a href="http://localhost:5173/signin2" className="text-blue-500">
