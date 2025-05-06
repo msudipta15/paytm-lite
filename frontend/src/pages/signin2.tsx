@@ -1,10 +1,10 @@
-
-
 export function Signin2() {
   return (
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
-        <div className=" font-bold text-4xl pl-20 text-blue-600">Paytm</div>
+        <div className=" font-bold text-4xl pl-20 text-blue-600">
+          <a href="http://localhost:5173/home">Paytm</a>
+        </div>
       </div>
       <div className="flex justify-center">
         <div className="bg-white w-lg max-h-full mt-25 p-4 rounded-lg">
@@ -26,7 +26,7 @@ export function Signin2() {
                 Password
               </div>
               <input
-                type="text"
+                type="password"
                 placeholder="Enter your password"
                 className="w-full px-5 py-3 border border-gray-200 rounded-lg"
               />
@@ -37,9 +37,9 @@ export function Signin2() {
               </button>
             </div>
             <div className="ml-15 mr-15  mb-3 text-center ">
-              <span>Already have an account? </span>
-              <a href="" className="text-blue-500">
-                Sign in
+              <span>Don't have an account? </span>
+              <a href="http://localhost:5173/signup2" className="text-blue-500">
+                Create One
               </a>
             </div>
           </div>
