@@ -8,6 +8,7 @@ import { Sendmoney } from "./pages/sendmoney";
 import { EditUser } from "./pages/edituser";
 import { Dashboard_new } from "./pages/dashboard_new";
 import { Home2 } from "./pages/home_new";
+import { Signup2 } from "./pages/signup2";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home2 />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signup2" element={<Signup2 />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard2" element={<Dashboard_new />} />

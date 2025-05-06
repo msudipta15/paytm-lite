@@ -2,9 +2,11 @@ import { Brandcard } from "../components/brandcard";
 import { FeatureCard1 } from "../components/featurecard1";
 import { FeatureCard2 } from "../components/featurecard2";
 import { FeatureCard3 } from "../components/featurecard3";
+import { HomeFooter } from "../components/homefooter";
 import { HomeTopBar } from "../components/hometopbar";
 import { ReviewCrad1 } from "../components/reviewcard1";
 import { ReviewCrad2 } from "../components/reviewcard2";
+import { SubscribeCard } from "../components/subscribeCard";
 import { Mfeature1 } from "../icons/mfeature1";
 import { Mfeature3 } from "../icons/mfeature3";
 import { Mfeature2 } from "../icons/mfeautre2";
@@ -45,6 +47,8 @@ export function Home2() {
           <Mfeature4 />
         </div>
       </div>
+      <SubscribeCard />
+      <HomeFooter />
     </div>
   );
 }
