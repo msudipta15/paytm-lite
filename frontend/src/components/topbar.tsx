@@ -10,7 +10,7 @@ export function Topbar() {
           <EditIcon />
         </div>
         <div className="pl-15 pr-20">
-          <button className="px-6 py-2 bg-blue-500 cursor-pointer rounded-md text-white font-medium hover:bg-blue-800">
+          <button className="px-6 py-2 bg-blue-500 cursor-pointer rounded-md text-white font-medium hover:bg-blue-700">
             Logout
           </button>
         </div>

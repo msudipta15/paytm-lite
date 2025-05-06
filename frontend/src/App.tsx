@@ -7,12 +7,14 @@ import { Dashboard } from "./pages/dashboard";
 import { Sendmoney } from "./pages/sendmoney";
 import { EditUser } from "./pages/edituser";
 import { Dashboard_new } from "./pages/dashboard_new";
+import { Home2 } from "./pages/home_new";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home2 />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard" element={<Dashboard />} />
