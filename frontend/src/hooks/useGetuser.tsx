@@ -3,7 +3,6 @@ import { useState } from "react";
 
 export function usegetUser() {
   const [firstname, setfirstnamename] = useState("");
-  const [lastname, setlastname] = useState("");
 
   async function getusername() {
     const token = localStorage.getItem("token");
@@ -13,10 +12,8 @@ export function usegetUser() {
       },
     });
     const firstname = user.data.user.firstname;
-    const lastname = user.data.user.lastname;
     setfirstnamename(firstname);
-    setlastname(lastname);
   }
 
-  return { firstname, lastname, getusername };
+  return { firstname, getusername };
 }
