@@ -127,7 +127,7 @@ userRoute.put("/update", auth_1.userauth, function (req, res) {
         if (validupdate.success) {
             try {
                 yield db_1.usermodel.updateOne({ _id: id }, { firstname, lastname, password: hashpassword });
-                res.status(200).json({ msg: "updated" });
+                res.status(200).json({ msg: "Succesfully Updated !" });
             }
             catch (error) {
                 res.status(402).json({ msg: "Update failed" });

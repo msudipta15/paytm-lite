@@ -124,7 +124,7 @@ userRoute.put(
           { _id: id },
           { firstname, lastname, password: hashpassword }
         );
-        res.status(200).json({ msg: "updated" });
+        res.status(200).json({ msg: "Succesfully Updated !" });
       } catch (error) {
         res.status(402).json({ msg: "Update failed" });
         console.log(error);
