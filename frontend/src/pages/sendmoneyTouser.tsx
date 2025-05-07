@@ -27,7 +27,7 @@ export function SendMoney2user() {
       );
 
       alert(`$${amount} send succesfully to ${reciever_email}`);
-      navigate("/dashboard2");
+      navigate("/dashboard");
     } catch (err: any) {
       if (err.response?.data?.msg) {
         seterror(err.response?.data?.msg);

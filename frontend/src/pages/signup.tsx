@@ -2,110 +2,118 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Signup() {
+export function Signup2() {
   const emailref = useRef<HTMLInputElement>(null);
-  const passwordref = useRef<HTMLInputElement>(null);
   const firstnameref = useRef<HTMLInputElement>(null);
   const lastnameref = useRef<HTMLInputElement>(null);
+  const passwordref = useRef<HTMLInputElement>(null);
 
-  const [error, setError] = useState("");
+  const [error, seterror] = useState("");
 
   const navigate = useNavigate();
 
   async function signup() {
-    const email = emailref.current?.value.trim();
-    const password = passwordref.current?.value.trim();
-    const firstname = firstnameref.current?.value.trim();
-    const lastname = lastnameref.current?.value.trim();
+    const email = emailref.current?.value;
+    const firstname = firstnameref.current?.value;
+    const lastname = lastnameref.current?.value;
+    const password = passwordref.current?.value;
 
-    if (!email || !password || !firstname || !lastname) {
-      setError("All fields are required !");
+    if (!email || !firstname || !lastname || !password) {
+      seterror("All fields are required !");
       return;
     }
 
     try {
       await axios.post("http://localhost:3000/api/v1/signup", {
         email,
-        password,
         firstname,
         lastname,
+        password,
       });
-
-      navigate("/signin");
-    } catch (err: any) {
-      if (err.response?.data?.msg) {
-        setError(err.response?.data?.msg);
+      navigate("/signin2");
+    } catch (error: any) {
+      if (error.response?.data?.msg) {
+        seterror(error.response?.data?.msg);
       } else {
-        setError("Something went wrong !");
+        seterror("something went wrong");
       }
     }
   }
 
   return (
-    <div className="w-full h-screen bg-slate-950 flex-col items-center justify-center">
-      <div className="bg-slate-950    w-full flex h-full justify-center ">
-        <div className="bg-white px-8 py-4 pb-8 mt-32   flex flex-col rounded-md h-fit w-80">
-          <div className=" flex justify-center items-center mb-1 font-bold  text-3xl">
-            <div className="m-1">
-              <div className="flex justify-center items-center">Sign up</div>
-              <div className="text-sm mt-1 font-light flex justify-center items-center text-center">
-                Enter your information to create an account
-              </div>
-            </div>
+    <div className="bg-gray-100 h-screen w-full">
+      <div className="bg-white   p-4 py-5 flex justify-between items-center">
+        <div className=" font-bold text-4xl pl-20 text-blue-600">
+          <a href="http://localhost:5173">Paytm</a>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div className="bg-white w-lg max-h-full mt-15 p-4 rounded-lg">
+          <div className="text-center text-2xl mb-5 font-medium text-slate-900">
+            Create Your Paytm Account
           </div>
-
-          <form
-            className="flex flex-col"
-            onSubmit={(e) => {
-              e.preventDefault();
-              signup();
-            }}
-          >
-            <div className="text-slate-900 font-medium ml-1">Email</div>
-            <input
-              placeholder={"Enter your email"}
-              ref={emailref}
-              className="p-1 m-1  border rounded-md border-slate-700 "
-            />
-            <div className="text-slate-900 font-medium ml-1">Password</div>
-            <input
-              type="text"
-              placeholder={"Enter your password"}
-              ref={passwordref}
-              className="p-1 m-1  border rounded-md border-slate-700"
-            />
-            <div className="text-slate-900 font-medium ml-1">Firstname</div>
-            <input
-              type="text"
-              placeholder="Enter your firstname"
-              ref={firstnameref}
-              className="p-1 m-1  border rounded-md border-slate-700"
-            />
-            <div className="text-slate-900 font-medium ml-1">Lastname</div>
-            <input
-              type="text"
-              placeholder="Enter your lastname"
-              ref={lastnameref}
-              className="p-1 m-1  border rounded-md border-slate-700"
-            />
-            <button
-              type="submit"
-              className="p-2 bg-slate-950 rounded-md text-white text-lg font-medium mt-3.5 cursor-pointer hover:bg-slate-800 "
-            >
-              Submit
-            </button>
-          </form>
-          {error && (
-            <div className="text-red-500 flex justify-center text-sm mt-2">
-              {error}
+          <div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">Email</div>
+              <input
+                type="text"
+                ref={emailref}
+                placeholder="Enter your email"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
             </div>
-          )}
-
-          <div className="text-center mt-2">
-            Already have an account?{" "}
-            <a className="text-blue-500" href="http://localhost:5173/signin">
-              Sign in
-            </a>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                First Name
+              </div>
+              <input
+                type="text"
+                ref={firstnameref}
+                placeholder="Enter your first name"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                Last Name
+              </div>
+              <input
+                type="text"
+                ref={lastnameref}
+                placeholder="Enter your last name"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                Password
+              </div>
+              <input
+                type="password"
+                ref={passwordref}
+                placeholder="Enter your password"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mt-4 mb-3 ">
+              <button
+                onClick={() => signup()}
+                className="bg-blue-600 w-full px-5 py-3 rounded-lg cursor-pointer hover:bg-blue-900  text-white font-medium text-lg"
+              >
+                Sign Up
+              </button>
+            </div>
+            {error && (
+              <div className="text-center text-lg text-red-500 font-medium">
+                {error}
+              </div>
+            )}
+            <div className="ml-15 mr-15  mb-3 text-center ">
+              <span>Already have an account? </span>
+              <a href="http://localhost:5173/signin" className="text-blue-500">
+                Sign in
+              </a>
+            </div>
           </div>
         </div>
       </div>

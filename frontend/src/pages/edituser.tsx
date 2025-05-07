@@ -1,17 +1,23 @@
-import axios from "axios";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { LogoTopbar } from "../components/logoTopbar";
 import { usegetUser } from "../hooks/useGetuser";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export function EditUser() {
+export function Edituser2() {
+  const navigate = useNavigate();
+
+  const { email, firstname, lastname, getusername } = usegetUser();
+
   const passwordref = useRef<HTMLInputElement>(null);
   const firstnameref = useRef<HTMLInputElement>(null);
   const lastnameref = useRef<HTMLInputElement>(null);
-  const { lastname, firstname, getusername } = usegetUser();
 
-  getusername();
+  const [error, seterror] = useState("");
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    getusername();
+  }, []);
 
   async function update() {
     const password = passwordref.current?.value.trim();
@@ -19,66 +25,99 @@ export function EditUser() {
     const lastname = lastnameref.current?.value.trim();
     const token = localStorage.getItem("token");
 
-    await axios.put(
-      "http://localhost:3000/api/v1/update",
-      {
-        password,
-        firstname,
-        lastname,
-      },
-      { headers: { token: token } }
-    );
+    if (!password || !firstname || !lastname) {
+      seterror("Inputs can not be Empty");
+      return;
+    }
 
-    navigate("/dashboard");
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/v1/update",
+        {
+          password,
+          firstname,
+          lastname,
+        },
+        { headers: { token: token } }
+      );
+      alert(response.data.msg);
+      navigate("/dashboard");
+    } catch (error: any) {
+      if (error.response?.data?.msg) {
+        seterror(error.response?.data?.msg);
+      } else {
+        seterror("something went wrong");
+      }
+    }
   }
 
   return (
-    <div className="w-full h-screen bg-slate-950 flex-col items-center justify-center">
-      <div className="bg-slate-950    w-full flex h-full justify-center ">
-        <div className="bg-white px-8 py-4 pb-8 mt-32   flex flex-col rounded-md h-fit w-80">
-          <div className=" flex justify-center items-center mb-1 font-bold  text-3xl">
-            <div className="m-1">
-              <div className="flex justify-center items-center">Edit User</div>
-              <div className="text-sm mt-1 font-light flex justify-center items-center text-center">
-                Update your details
-              </div>
-            </div>
-          </div>
+    <div className="h-screen w-full bg-gray-100">
+      <LogoTopbar />
 
-          <div className="text-slate-900 font-medium ml-1">firstname</div>
-          <input
-            type="text"
-            placeholder="firstname..."
-            ref={firstnameref}
-            defaultValue={firstname}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <div className="text-slate-900 font-medium ml-1">lastname</div>
-          <input
-            type="text"
-            ref={lastnameref}
-            defaultValue={lastname}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <div className="text-slate-900 font-medium ml-1">password</div>
-          <input
-            type="password"
-            placeholder="password..."
-            ref={passwordref}
-            className="p-1 m-1  border rounded-md border-slate-700"
-          />
-          <button
-            onClick={() => {
-              update();
-            }}
-            className="p-2 bg-slate-950 rounded-md text-white text-lg font-medium mt-3.5 cursor-pointer hover:bg-slate-800 "
-          >
-            Confirm
-          </button>
-          <div className="text-center mt-2">
-            <a className="text-blue-500" href="http://localhost:5173/dashboard">
-              Back to dashboard
-            </a>
+      <div className="flex justify-center">
+        <div className="bg-white w-lg max-h-full mt-15 p-4 rounded-lg">
+          <div className="text-center text-2xl mb-5 font-medium text-slate-900">
+            Edit Account
+          </div>
+          <div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">Email</div>
+              <input
+                type="text"
+                value={email}
+                placeholder="Enter your email"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                First Name
+              </div>
+              <input
+                type="text"
+                defaultValue={firstname}
+                ref={firstnameref}
+                placeholder="Enter your first name"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                Last Name
+              </div>
+              <input
+                type="text"
+                defaultValue={lastname}
+                ref={lastnameref}
+                placeholder="Enter your last name"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mb-3">
+              <div className="text-slate-700 font-medium pl-1 mb-1">
+                Password
+              </div>
+              <input
+                type="password"
+                ref={passwordref}
+                placeholder="Enter your password"
+                className="w-full px-5 py-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            <div className="ml-15 mr-15 mt-4 mb-3 ">
+              <button
+                onClick={() => update()}
+                className="bg-blue-600 w-full px-5 py-3 mb-2 rounded-lg cursor-pointer hover:bg-blue-900  text-white font-medium text-lg"
+              >
+                Submit
+              </button>
+            </div>
+            {error && (
+              <div className="p-1 text-center text-xl text-red-600 font-medium">
+                {error}
+              </div>
+            )}
           </div>
         </div>
       </div>

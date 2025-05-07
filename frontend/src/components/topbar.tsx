@@ -14,7 +14,7 @@ export function Topbar({ firstname, logout }: type) {
       <div className=" font-semibold text-4xl pl-20">Paytm</div>
       <div className="flex gap-4 items-center font-medium">
         <div className=" text-2xl">Hello , {firstname} </div>
-        <div onClick={() => navigate(`/edituser2`)} className="w-fit h-fit">
+        <div onClick={() => navigate(`/edituser`)} className="w-fit h-fit">
           <EditIcon />
         </div>
         <div className="pl-15 pr-20">

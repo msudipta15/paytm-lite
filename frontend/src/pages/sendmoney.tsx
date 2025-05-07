@@ -1,23 +1,27 @@
-import { useNavigate, useParams } from "react-router-dom";
-
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { LogoTopbar } from "../components/logoTopbar";
+import { usegetUser } from "../hooks/useGetuser";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export function Sendmoney() {
-  const { email } = useParams<{ email: string }>();
+export function SendMoney2() {
+  const { email, getusername } = usegetUser();
+  const navigate = useNavigate();
+  const emailref = useRef<HTMLInputElement>(null);
   const amountref = useRef<HTMLInputElement>(null);
-
   const [error, seterror] = useState("");
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    getusername();
+  }, []);
 
   async function sendmoney() {
-    const token = localStorage.getItem("token");
-    const reciever_email = email;
+    const reciever_email = emailref.current?.value;
     const amount = amountref.current?.value;
+    const token = localStorage.getItem("token");
 
-    if (!amount) {
-      seterror("Enter a amount !");
+    if (!reciever_email || !amount) {
+      seterror("All fields are required !");
       return;
     }
 
@@ -30,9 +34,9 @@ export function Sendmoney() {
 
       alert(`$${amount} send succesfully to ${reciever_email}`);
       navigate("/dashboard");
-    } catch (err: any) {
-      if (err.response?.data?.msg) {
-        seterror(err.response?.data?.msg);
+    } catch (error: any) {
+      if (error.response?.data?.msg) {
+        seterror(error.response?.data?.msg);
       } else {
         seterror("something went wrong");
       }
@@ -40,45 +44,46 @@ export function Sendmoney() {
   }
 
   return (
-    <div className="h-screen w-full bg-slate-950 flex justify-center items-center">
-      <div className="bg-white h-72 w-1/4 rounded-md p-4">
-        <div className="text-3xl  text-center font-bold flex  justify-center items-center">
-          <div>Send Money</div>
-        </div>
-        <div className="flex justify-center p-1 items-center  text-xl ">
-          <div className="ml-0.5 text-xl text-blue-600">{email}</div>
-        </div>
-        <div>
-          <div className="text-gray-600 mt-1">Amount (in Usd):</div>
-          <div className="w-full">
+    <div className="bg-gray-100 w-full h-screen">
+      <LogoTopbar />
+      <div className="flex justify-center h-full w-full">
+        <div className="bg-white w-1/3 h-1/2 mt-10 rounded-lg">
+          <div className="text-center text-3xl p-3 font-semibold text-blue-800">
+            Transfer Money
+          </div>
+          <div className="text-center text-xl font-medium mb-4 text-green-600">
+            {email}
+          </div>
+          <div className="my-2 mx-10">
+            <div className="text-lg font-medium mb-1 text-gray-600">
+              Reciever Email
+            </div>
+            <input
+              type="email"
+              ref={emailref}
+              placeholder="Enter reciever email"
+              className="px-5 py-2 w-full rounded-lg border border-gray-200"
+            />
+          </div>
+          <div className="my-2 mx-10">
+            <div className="text-lg font-medium mb-1 text-gray-600">Amount</div>
             <input
               type="number"
               ref={amountref}
-              placeholder="Enter amount "
-              className="p-2 w-full border border-gray-400 rounded-md"
+              placeholder="Enter amount"
+              className="px-5 py-2 w-full rounded-lg border border-gray-200"
             />
           </div>
-        </div>
-
-        <div className="flex justify-center mt-3">
-          <button
-            onClick={() => sendmoney()}
-            className="px-8 py-2 rounded-md cursor-pointer text-white bg-green-500"
-          >
-            Send
-          </button>
-        </div>
-        {error && (
-          <div className="flex justify-center mt-1 text-red-600 font-medium">
-            {error}
+          <div className="mx-10 my-2">
+            <button
+              onClick={() => sendmoney()}
+              className="w-full bg-green-600 text-white py-2 text-xl font-medium  rounded-lg mt-4 cursor-pointer hover:bg-green-800"
+            >
+              Send
+            </button>
           </div>
-        )}
-        <div className="flex justify-center items-center mt-1 ">
-          <div
-            className=" text-gray-500 cursor-pointer mt-1"
-            onClick={() => navigate("/dashboard")}
-          >
-            <span className="hover:text-slate-950">Back to Dashboard</span>
+          <div className="text-center text-xl font-medium mt-4 text-red-600">
+            {error}
           </div>
         </div>
       </div>

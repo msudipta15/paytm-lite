@@ -8,7 +8,7 @@ export function LogoTopbar() {
       <div className=" font-semibold text-4xl pl-20">Paytm</div>
       <div className="pr-20 font-medium text-lg">
         <button
-          onClick={() => navigate("/dashboard2")}
+          onClick={() => navigate("/dashboard")}
           className="cursor-pointer hover:text-gray-200"
         >
           Back to Dashboard

@@ -60,7 +60,7 @@ export function RecieverCard({ email, firstname, lastname }: reciever) {
         </div>
         <div>
           <button
-            onClick={() => navigate(`/sendmoney2user/${email}`)}
+            onClick={() => navigate(`/sendmoney/${email}`)}
             className="bg-green-500 px-5 py-1 text-white rounded-lg cursor-pointer hover:bg-green-800 font-medium text-lg"
           >
             Send
