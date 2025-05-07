@@ -10,6 +10,9 @@ import { Dashboard_new } from "./pages/dashboard_new";
 import { Home2 } from "./pages/home_new";
 import { Signup2 } from "./pages/signup2";
 import { Signin2 } from "./pages/signin2";
+import { SendMoney2 } from "./pages/sendmoney2";
+import { SendMoney2user } from "./pages/sendmoney2user";
+import { Edituser2 } from "./pages/edituser2";
 
 function App() {
   return (
@@ -24,7 +27,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard2" element={<Dashboard_new />} />
         <Route path="/sendmoney/:email" element={<Sendmoney />} />
+        <Route path="/sendmoney2" element={<SendMoney2 />} />
+        <Route path="/sendmoney2user/:email" element={<SendMoney2user />} />
         <Route path="/edituser" element={<EditUser />} />
+        <Route path="/edituser2" element={<Edituser2 />} />
       </Routes>
     </BrowserRouter>
   );

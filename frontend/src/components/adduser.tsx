@@ -44,18 +44,18 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
             </div>
           </div>
 
-          <div className="flex justify-center mt-3  text-3xl font-bold">
+          <div className="flex justify-center  text-3xl font-bold">
             Add Reciever
           </div>
           <div className="text-sm font-medium text-center">
             Enter email of the reciever
           </div>
-          <div className="flex justify-center p-3">
+          <div className="flex justify-center p-3 w-full px-8">
             {" "}
             <input
               placeholder="Enter email "
               ref={recieverref}
-              className="p-2 px-3 w-full mx-4 border border-gray-300 border-opacity-25 rounded-md"
+              className="p-2 px-6 w-full border border-gray-300 border-opacity-25 rounded-md"
               type="email"
             />
           </div>
@@ -63,9 +63,9 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
             {" "}
             <button
               onClick={() => addreciever()}
-              className="bg-blue-600 cursor-pointer rounded-md px-3.5 py-2.5 mt-1 text-white"
+              className="bg-blue-600 cursor-pointer rounded-md px-10 py-2 mt-1 font-medium text-lg text-white hover:bg-blue-800"
             >
-              Add User
+              Add
             </button>
           </div>
           {error && (

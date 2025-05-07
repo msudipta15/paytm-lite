@@ -76,7 +76,7 @@ export function Signin2() {
                 onClick={() => signin()}
                 className="bg-blue-600 w-full px-5 py-3 rounded-lg cursor-pointer hover:bg-blue-900  text-white font-medium text-lg"
               >
-                Sign Up
+                Sign In
               </button>
             </div>
             {error && (
