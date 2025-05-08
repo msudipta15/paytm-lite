@@ -163,9 +163,6 @@ userRoute.post("/addreciever", auth_1.userauth, function (req, res) {
             yield db_1.recievermodel.create({
                 userid: id,
                 recieverid: reciever_id,
-                recieveremail: email,
-                recieverfirstname: recieverfirstname,
-                recieverlastname: recieverlastname,
             });
             res.status(200).json({ msg: "Reciever added" });
         }
@@ -200,7 +197,9 @@ userRoute.get("/reciever", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.id;
         try {
-            const reciever = yield db_1.recievermodel.find({ userid: id });
+            const reciever = yield db_1.recievermodel
+                .find({ userid: id })
+                .populate({ path: "recieverid", select: "email firstname lastname" });
             if (reciever.length != 0) {
                 res.status(200).json({ reciever });
             }

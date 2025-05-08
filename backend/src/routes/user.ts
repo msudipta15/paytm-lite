@@ -162,9 +162,6 @@ userRoute.post(
       await recievermodel.create({
         userid: id,
         recieverid: reciever_id,
-        recieveremail: email,
-        recieverfirstname: recieverfirstname,
-        recieverlastname: recieverlastname,
       });
       res.status(200).json({ msg: "Reciever added" });
     } catch (error) {
@@ -203,7 +200,9 @@ userRoute.get(
     const id = req.id;
 
     try {
-      const reciever = await recievermodel.find({ userid: id });
+      const reciever = await recievermodel
+        .find({ userid: id })
+        .populate({ path: "recieverid", select: "email firstname lastname" });
       if (reciever.length != 0) {
         res.status(200).json({ reciever });
       } else {

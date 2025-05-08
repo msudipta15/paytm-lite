@@ -47,10 +47,7 @@ const accountSchema = new mongoose_1.Schema({
 });
 const recieverSchema = new mongoose_1.Schema({
     userid: { type: mongoose_1.default.Types.ObjectId, required: true, ref: "user" },
-    recieverid: { type: mongoose_1.default.Types.ObjectId },
-    recieveremail: { type: String },
-    recieverfirstname: { type: String },
-    recieverlastname: { type: String },
+    recieverid: { type: mongoose_1.default.Types.ObjectId, required: true, ref: "user" },
 });
 const guestSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true, max: 100 },

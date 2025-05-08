@@ -14,10 +14,7 @@ const accountSchema = new Schema({
 
 const recieverSchema = new Schema({
   userid: { type: mongoose.Types.ObjectId, required: true, ref: "user" },
-  recieverid: { type: mongoose.Types.ObjectId },
-  recieveremail: { type: String },
-  recieverfirstname: { type: String },
-  recieverlastname: { type: String },
+  recieverid: { type: mongoose.Types.ObjectId, required: true, ref: "user" },
 });
 
 const guestSchema = new Schema({
