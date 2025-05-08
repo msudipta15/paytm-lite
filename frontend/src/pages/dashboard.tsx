@@ -42,9 +42,13 @@ export function Dashboard_new() {
 
       <div className="mr-20 ml-20 mt-2 text-2xl font-medium">Receiver List</div>
       {recieverlist &&
-        recieverlist.map((r) => <RecieverCard email={r.recieveremail} 
-        firstname={r.recieverid.}
-        />)}
+        recieverlist.map((r) => (
+          <RecieverCard
+            email={r.recieverid.email}
+            firstname={r.recieverid.firstname}
+            lastname={r.recieverid.lastname}
+          />
+        ))}
     </div>
   );
 }

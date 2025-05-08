@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
 
-export function useGetReciever() {
-  interface recieverlist {
-    id: string;
-    userid: string;
-    recieverid: string;
-    recieveremail: string;
-    recieverfirstname: string;
-    recieverlastname: string;
-  }
+interface Iuser {
+  email: String;
+  firstname: String;
+  lastname: String;
+}
+interface recieverlist {
+  id: string;
+  userid: string;
+  recieverid: Iuser;
+}
 
+export function useGetReciever() {
   const [recieverlist, setrecieverlist] = useState<recieverlist[]>([]);
 
   async function getrecievers() {
