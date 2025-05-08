@@ -6,11 +6,10 @@ import { useState } from "react";
 
 interface reciever {
   email: String;
-  firstname: String;
-  lastname: String;
+  
 }
 
-export function RecieverCard({ email, firstname, lastname }: reciever) {
+export function RecieverCard({ email}: reciever) {
   const [deletecard, setdeletecard] = useState(false);
 
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ export function RecieverCard({ email, firstname, lastname }: reciever) {
           <Personicon />
         </div>
         <div className="text-xl font-medium ">
-          {firstname} {lastname}
+          firstname lastname
         </div>
       </div>
       <div className="flex items-center gap-4">
