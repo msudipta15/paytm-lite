@@ -17,7 +17,7 @@ export function Adduser({ open, close }: { open: boolean; close: () => void }) {
         return;
       }
       await axios.post(
-        "http://localhost:3000/api/v1/addreciever",
+        "https://paytm-lite-backend.onrender.com/api/v1/addreciever",
         { email },
         { headers: { token: token } }
       );

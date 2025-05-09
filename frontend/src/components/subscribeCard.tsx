@@ -9,7 +9,7 @@ export function SubscribeCard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/guest/subscribe",
+        "https://paytm-lite-backend.onrender.com/api/v1/guest/subscribe",
         {
           email: email,
         }

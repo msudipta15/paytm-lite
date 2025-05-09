@@ -24,12 +24,15 @@ export function Signup2() {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/v1/signup", {
-        email,
-        firstname,
-        lastname,
-        password,
-      });
+      await axios.post(
+        "https://paytm-lite-backend.onrender.com/api/v1/signup",
+        {
+          email,
+          firstname,
+          lastname,
+          password,
+        }
+      );
       navigate("/signin2");
     } catch (error: any) {
       if (error.response?.data?.msg) {
@@ -44,7 +47,10 @@ export function Signup2() {
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
         <div className=" font-bold text-4xl pl-20 text-blue-600">
-          <div onClick={() => navigate("/")} className="h-fit w-fit cursor-pointer">
+          <div
+            onClick={() => navigate("/")}
+            className="h-fit w-fit cursor-pointer"
+          >
             Paytm
           </div>
         </div>

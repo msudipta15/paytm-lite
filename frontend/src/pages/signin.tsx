@@ -20,10 +20,13 @@ export function Signin2() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/signin", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://paytm-lite-backend.onrender.com/api/v1/signin",
+        {
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem("token", response.data.token);
 

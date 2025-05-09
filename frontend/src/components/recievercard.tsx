@@ -20,7 +20,7 @@ export function RecieverCard({ email, firstname, lastname }: reciever) {
 
     try {
       await axios.put(
-        "http://localhost:3000/api/v1/deletereciever",
+        "https://paytm-lite-backend.onrender.com/api/v1/deletereciever",
         { email },
         {
           headers: {
