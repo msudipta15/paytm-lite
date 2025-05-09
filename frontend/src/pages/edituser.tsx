@@ -32,7 +32,7 @@ export function Edituser2() {
 
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/v1/update",
+        `${process.env.url}/api/v1/update`,
         {
           password,
           firstname,
