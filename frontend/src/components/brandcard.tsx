@@ -5,7 +5,7 @@ interface input {
 
 export function Brandcard({ handlesignin, handlesignup }: input) {
   return (
-    <div className="bg-blue-600 h-[450px] w-full">
+    <div className="bg-blue-600 h-[450px] w-full flex flex-col justify-center">
       <div className="text-white text-center">
         <h1 className="text-6xl pt-10 font-extrabold">Welcome to Paytm</h1>
         <h3 className="mt-3  text-2xl">
@@ -13,7 +13,7 @@ export function Brandcard({ handlesignin, handlesignup }: input) {
         </h3>
         <h3 className="  text-2xl">payments at your fingertips.</h3>
       </div>
-      <div className="pt-22 flex justify-center gap-5">
+      <div className="pt-22 flex justify-center gap-5 mb-6">
         <button
           onClick={handlesignup}
           className="px-7 py-3 text-lg font-medium rounded-lg text-blue-500 cursor-pointer hover:text-blue-700 bg-white"
