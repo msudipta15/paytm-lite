@@ -41,7 +41,12 @@ export function Signin2() {
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
         <div className=" font-bold text-4xl pl-20 text-blue-600">
-          <a href="http://localhost:5173">Paytm</a>
+          <div
+            onClick={() => navigate("/")}
+            className="h-fit w-fit cursor-pointer"
+          >
+            Paytm
+          </div>
         </div>
       </div>
       <div className="flex justify-center">
@@ -84,11 +89,14 @@ export function Signin2() {
                 {error}
               </div>
             )}
-            <div className="ml-15 mr-15  mb-3 pb-5 text-center ">
-              <span>Don't have an account? </span>
-              <a href="http://localhost:5173/signup" className="text-blue-500">
-                Create One
-              </a>
+            <div className="ml-15 mr-15  mb-3 pb-5 flex justify-center gap-1 text-center ">
+              <div>Don't have an account? </div>
+              <div
+                onClick={() => navigate("/signup")}
+                className="text-blue-500 w-fit h-fit cursor-pointer hover:text-blue-700"
+              >
+                Sign up
+              </div>
             </div>
           </div>
         </div>

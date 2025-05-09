@@ -44,7 +44,9 @@ export function Signup2() {
     <div className="bg-gray-100 h-screen w-full">
       <div className="bg-white   p-4 py-5 flex justify-between items-center">
         <div className=" font-bold text-4xl pl-20 text-blue-600">
-          <a href="http://localhost:5173">Paytm</a>
+          <div onClick={() => navigate("/")} className="h-fit w-fit cursor-pointer">
+            Paytm
+          </div>
         </div>
       </div>
       <div className="flex justify-center">
@@ -108,11 +110,14 @@ export function Signup2() {
                 {error}
               </div>
             )}
-            <div className="ml-15 mr-15  mb-3 text-center ">
-              <span>Already have an account? </span>
-              <a href="http://localhost:5173/signin" className="text-blue-500">
+            <div className="ml-15 mr-15  mb-3 text-center flex justify-center gap-1 ">
+              <div>Already have an account? </div>
+              <div
+                onClick={() => navigate("/signin")}
+                className="text-blue-500 w-fit h-fit cursor-pointer hover:text-blue-700"
+              >
                 Sign in
-              </a>
+              </div>
             </div>
           </div>
         </div>
