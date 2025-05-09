@@ -5,7 +5,7 @@ interface input {
 
 export function Brandcard({ handlesignin, handlesignup }: input) {
   return (
-    <div className="bg-blue-600 h-96 w-full">
+    <div className="bg-blue-600 h-[450px] w-full">
       <div className="text-white text-center">
         <h1 className="text-6xl pt-10 font-extrabold">Welcome to Paytm</h1>
         <h3 className="mt-3  text-2xl">
