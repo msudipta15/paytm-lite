@@ -27,7 +27,7 @@ export function SendMoney2() {
 
     try {
       await axios.post(
-        "http://localhost:3000/api/v1/account/transfer",
+        "https://paytm-lite-backend.onrender.com/api/v1/account/transfer",
         { email: reciever_email, amount: amount },
         { headers: { token: token } }
       );

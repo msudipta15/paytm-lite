@@ -32,7 +32,7 @@ export function Edituser2() {
 
     try {
       const response = await axios.put(
-        `${process.env.url}/api/v1/update`,
+        "https://paytm-lite-backend.onrender.com/api/v1/update",
         {
           password,
           firstname,
