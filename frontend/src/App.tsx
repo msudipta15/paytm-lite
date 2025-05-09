@@ -16,7 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup2 />} />
         <Route path="/signin" element={<Signin2 />} />
         <Route path="/dashboard" element={<Dashboard_new />} />
-        <Route path="/sendmoney/:email" element={<SendMoney2user />} />
+        <Route path="/sendmoney/:reciever_email" element={<SendMoney2user />} />
         <Route path="/sendmoney" element={<SendMoney2 />} />
         <Route path="/edituser" element={<Edituser2 />} />
       </Routes>

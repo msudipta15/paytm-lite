@@ -1,17 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { LogoTopbar } from "../components/logoTopbar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { usegetUser } from "../hooks/useGetuser";
 
 export function SendMoney2user() {
-  const { email } = useParams();
+  const { email, getusername } = usegetUser();
+  const { reciever_email } = useParams();
   const navigate = useNavigate();
   const [error, seterror] = useState("");
   const amountref = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    getusername();
+  }, []);
+
   async function sendmoney() {
     const token = localStorage.getItem("token");
-    const reciever_email = email;
     const amount = amountref.current?.value;
 
     if (!amount) {
@@ -38,7 +43,7 @@ export function SendMoney2user() {
   }
 
   return (
-    <div className="bg-gray-100 w-full h-screen">
+    <div className="bg-gray-100 w-full h-screen flex flex-col ">
       <LogoTopbar />
       <div className="flex justify-center h-full w-full">
         <div className="bg-white min-w-1/3 h-1/2 mt-10 rounded-lg">
@@ -46,13 +51,15 @@ export function SendMoney2user() {
             Transfer Money
           </div>
           <div className="text-center text-xl font-medium mb-4 text-gray-700">
-            user
+            {email}
           </div>
           <div className="my-2 mx-10 flex justify-center gap-4 items-center">
             <div className="text-2xl font-medium  text-gray-600">
               Reciever :
             </div>
-            <div className="text-2xl font-medium text-blue-500">{email}</div>
+            <div className="text-2xl font-medium text-blue-500">
+              {reciever_email}
+            </div>
           </div>
           <div className="my-2 mx-10">
             <div className="text-lg font-medium mb-1 text-gray-600">Amount</div>
