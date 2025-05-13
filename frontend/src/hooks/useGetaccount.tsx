@@ -6,7 +6,7 @@ export function useGetAccount() {
   async function getbalance() {
     const token = localStorage.getItem("token");
     const account = await axios.get(
-      "https://paytm-lite-backend.onrender.com/api/v1/account/balance",
+      "http://localhost:3000/api/v1/account/balance",
       {
         headers: {
           token: token,

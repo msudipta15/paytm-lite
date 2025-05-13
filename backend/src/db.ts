@@ -21,7 +21,18 @@ const guestSchema = new Schema({
   email: { type: String, required: true, unique: true, max: 100 },
 });
 
+const transactionSchema = new Schema({
+  sender: { type: mongoose.Types.ObjectId, ref: "user", required: true },
+  reciever: { type: mongoose.Types.ObjectId, ref: "user", required: true },
+  amount: { type: Number, required: true },
+  time: { type: Date, default: Date.now },
+});
+
 export const usermodel = mongoose.model("user", userSchema);
 export const accountmodel = mongoose.model("account", accountSchema);
 export const recievermodel = mongoose.model("reciever", recieverSchema);
 export const guestModel = mongoose.model("guest", guestSchema);
+export const transactionModel = mongoose.model(
+  "transaction",
+  transactionSchema
+);

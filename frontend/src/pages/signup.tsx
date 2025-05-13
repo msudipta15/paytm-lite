@@ -24,15 +24,12 @@ export function Signup2() {
     }
 
     try {
-      await axios.post(
-        "https://paytm-lite-backend.onrender.com/api/v1/signup",
-        {
-          email,
-          firstname,
-          lastname,
-          password,
-        }
-      );
+      await axios.post("http://localhost:3000/api/v1/signup", {
+        email,
+        firstname,
+        lastname,
+        password,
+      });
       navigate("/signin2");
     } catch (error: any) {
       if (error.response?.data?.msg) {

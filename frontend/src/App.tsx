@@ -7,7 +7,7 @@ import { Signin2 } from "./pages/signin";
 import { SendMoney2 } from "./pages/sendmoney";
 import { SendMoney2user } from "./pages/sendmoneyTouser";
 import { Edituser2 } from "./pages/edituser";
-
+import { History } from "./pages/history";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/sendmoney/:reciever_email" element={<SendMoney2user />} />
         <Route path="/sendmoney" element={<SendMoney2 />} />
         <Route path="/edituser" element={<Edituser2 />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </BrowserRouter>
   );

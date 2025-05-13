@@ -19,7 +19,7 @@ export function useGetReciever() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://paytm-lite-backend.onrender.com/api/v1/reciever",
+        "http://localhost:3000/api/v1/reciever",
         {
           headers: { token: token },
         }

@@ -16,6 +16,7 @@ exports.accountRouter = void 0;
 const express_1 = require("express");
 const auth_1 = require("../middleware/auth");
 const db_1 = require("../db");
+const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const accountRouter = (0, express_1.Router)();
 exports.accountRouter = accountRouter;
@@ -66,6 +67,12 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
             console.log(reciever_updated_balance);
             yield db_1.accountmodel.updateOne({ userid: userid }, { balance: user_updated_balance }, { session });
             yield db_1.accountmodel.updateOne({ userid: reciever }, { balance: reciever_updated_balance }, { session });
+            yield db_1.transactionModel.create({
+                sender: userid,
+                reciever: reciever,
+                amount: amount,
+                time: Date.now(),
+            });
             yield session.commitTransaction();
             res.json({ msg: "Transaction Succesfull" });
         }
@@ -75,6 +82,40 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
         }
         finally {
             session.endSession();
+        }
+    });
+});
+accountRouter.get("/transactions", auth_1.userauth, function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userid = req.id;
+        try {
+            const transactions = yield db_1.transactionModel
+                .find({
+                $or: [{ sender: userid }, { reciever: userid }],
+            })
+                .sort({ time: -1 })
+                .populate({ path: "sender reciever", select: "firstname lastname" });
+            const history = transactions.map((t) => {
+                return {
+                    user: 
+                    //@ts-ignore
+                    t.sender._id.toString() === (userid === null || userid === void 0 ? void 0 : userid.toString())
+                        ? //@ts-ignore
+                            t.reciever.firstname + " " + t.reciever.lastname
+                        : //@ts-ignore
+                            t.sender.firstname + " " + t.sender.lastname,
+                    type: 
+                    //@ts-ignore
+                    t.sender._id.toString() === (userid === null || userid === void 0 ? void 0 : userid.toString()) ? "Debit" : "Credit",
+                    amount: t.amount,
+                    time: (0, moment_timezone_1.default)(t.time).tz("Asia/Kolkata").format("DD/MM/YYYY  hh:mm"),
+                };
+            });
+            res.status(200).json({ history: history });
+        }
+        catch (error) {
+            console.log(error);
+            res.status(406).json({ msg: "something went wrong !" });
         }
     });
 });

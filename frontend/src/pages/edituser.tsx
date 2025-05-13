@@ -3,7 +3,6 @@ import { LogoTopbar } from "../components/logoTopbar";
 import { usegetUser } from "../hooks/useGetuser";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 export function Edituser2() {
   const navigate = useNavigate();
 
@@ -32,7 +31,7 @@ export function Edituser2() {
 
     try {
       const response = await axios.put(
-        "https://paytm-lite-backend.onrender.com/api/v1/update",
+        "http://localhost:3000/api/v1//update",
         {
           password,
           firstname,
