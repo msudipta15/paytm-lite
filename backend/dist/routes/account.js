@@ -40,7 +40,7 @@ accountRouter.post("/transfer", auth_1.userauth, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userid = req.id;
         const email = req.body.email;
-        const amount = parseInt(req.body.amount);
+        const amount = parseFloat(req.body.amount);
         const account = yield db_1.accountmodel.findOne({ userid: userid });
         const user_balance = account === null || account === void 0 ? void 0 : account.balance;
         const reciever = yield db_1.usermodel.findOne({ email: email }).select("_id");
@@ -108,7 +108,7 @@ accountRouter.get("/transactions", auth_1.userauth, function (req, res) {
                     //@ts-ignore
                     t.sender._id.toString() === (userid === null || userid === void 0 ? void 0 : userid.toString()) ? "Debit" : "Credit",
                     amount: t.amount,
-                    time: (0, moment_timezone_1.default)(t.time).tz("Asia/Kolkata").format("DD/MM/YYYY  hh:mm"),
+                    time: (0, moment_timezone_1.default)(t.time).tz("Asia/Kolkata").format("DD/MM/YYYY  hh:mm A"),
                 };
             });
             res.status(200).json({ history: history });

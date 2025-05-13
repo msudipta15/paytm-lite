@@ -32,7 +32,7 @@ accountRouter.post(
   async function (req: Request, res: Response) {
     const userid = req.id;
     const email = req.body.email;
-    const amount = parseInt(req.body.amount);
+    const amount = parseFloat(req.body.amount);
 
     const account = await accountmodel.findOne({ userid: userid });
     const user_balance = account?.balance;
@@ -123,7 +123,7 @@ accountRouter.get(
             //@ts-ignore
             t.sender._id.toString() === userid?.toString() ? "Debit" : "Credit",
           amount: t.amount,
-          time: moment(t.time).tz("Asia/Kolkata").format("DD/MM/YYYY  hh:mm"),
+          time: moment(t.time).tz("Asia/Kolkata").format("DD/MM/YYYY  hh:mm A"),
         };
       });
 

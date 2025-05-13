@@ -30,7 +30,7 @@ export function Signup2() {
         lastname,
         password,
       });
-      navigate("/signin2");
+      navigate("/signin");
     } catch (error: any) {
       if (error.response?.data?.msg) {
         seterror(error.response?.data?.msg);
