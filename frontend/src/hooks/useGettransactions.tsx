@@ -8,7 +8,7 @@ export function useGettransactions() {
 
   async function gettransactions() {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/account/transactions",
+      "https://paytm-lite-backend.onrender.com/api/v1/account/transactions",
       {
         headers: {
           token: token,
