@@ -210,7 +210,7 @@ userRoute.get(
       }
     } catch (error) {
       console.log(error);
-      res.status(402).json({ msg: "something went wrong" });
+      res.status(402).json({ msg: "something went wrong !" });
     }
   }
 );
