@@ -209,7 +209,7 @@ userRoute.get("/reciever", auth_1.userauth, function (req, res) {
         }
         catch (error) {
             console.log(error);
-            res.status(402).json({ msg: "something went wrong" });
+            res.status(402).json({ msg: "something went wrong !" });
         }
     });
 });
